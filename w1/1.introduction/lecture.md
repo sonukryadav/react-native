@@ -316,9 +316,5 @@ A nice basic button component which renders nicely on any platform. It covers th
   
 Most of the times due to this limited customisation developers use Pressable or TouchableOpacity to create button. We will discuss this in later sessions.  
   
-## Task for the day
-  
-- Create a Counter App
-- Use different button colors different platforms using platform module  
-- The counter and two buttons, all three should be with in a card. Try to apply shadow to the card.  
+
   

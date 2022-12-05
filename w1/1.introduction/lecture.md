@@ -19,25 +19,6 @@ In Hybrid Development there are two famous frameworks. React Native developed by
 
 We can use either class or function components in React Native. With the introduction of Hooks in React Native 0.59, Function components are more useful then class components.
 
-## Class Component returning Hello World
-
-```js
-import React, { Component } from 'react';
-import { Text, View } from 'react-native';
-
-class App extends Component {
-  render() {
-    return (
-      <View>
-        <Text>Hello, world!</Text>
-      </View>
-    );
-  }
-}
-
-export default App;
-```
-
 ## Function Component returning Hello World
 
 ```js

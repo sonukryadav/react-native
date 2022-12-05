@@ -8,5 +8,7 @@
 
 # Coding:
 
-- L: Counter Component.
-- A: Stopwatch with 3 buttons(start, pause, reset).
+1. Live:
+   - Counter Component.
+2. Assignment:
+   - Stopwatch with 3 buttons(start, pause, reset).

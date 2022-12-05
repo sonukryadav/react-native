@@ -7,5 +7,5 @@
   },
   "workbench.iconTheme": "vscode-icons",
   "terminal.integrated.scrollback": 100000,
-  "window.zoomLevel": 2
+  "window.zoomLevel": 3
 }

@@ -5,9 +5,19 @@ React Native
 ### Topics
 
 - Week 1
-  1. Introduction to React Native and Installations
-  2. Building a Basic App
-  3. Native Elements
+  - What is React native ?
+  - Getting started
+  - Native core components
+    - Text
+    - View
+    - ScrollView
+    - TextInput
+    - Touchable
+    - Pressable
+    - FlatList
+    - NestedList
+  - Native Styling
+  - Platform Dependent Code.
 - Week 2
   1. React Native Architecture
   2. API calls

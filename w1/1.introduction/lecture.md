@@ -250,6 +250,47 @@ const styles1 = StyleSheet.create({
 })  
 ```  
 
+```js
+import {View, Text, StyleSheet, Platform} from 'react-native'
+
+const App = () => {
+  return(<View style={styles.container}>
+    <Text style={styles.text1}>Hello</Text>
+    <Text style={styles.text2}>World</Text>
+  </View>)
+}
+
+export default App;
+
+const styles = StyleSheet.create({
+  container:{
+    flexDirection:'row',
+    marginTop: Platform.select({
+      android: 25,
+      ios: 0,
+      default: 0 
+    })
+  },
+  text1: {
+    flex:2,
+    backgroundColor:'red',
+    color:'green'
+  },
+  text2:{
+    flex:3,
+    backgroundColor:'green',
+    color:'#ffff'
+  } 
+})
+
+const generalStyles = StyleSheet.create({
+  row : {flexDirection:'row'}
+})
+
+const container = StyleSheet.compose(styles.container, generalStyles.row)
+```
+  
+  
 ### Using platform specific file extension  
   
 ```js

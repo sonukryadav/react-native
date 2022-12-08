@@ -44,6 +44,33 @@ It is a core component that reduces the opacity level to 0.2 as the touch event 
 - disabled: Disable the opacity animation and touch event callback with the disabled prop.
 - hitSlop: Defines the extra area of user's touch action. This prop helps us to create an UI element smaller than a fingertip on screen. We can define a number or Rect Object (object containing 4 different values for bottom, left, right, top).
 - pressRetentionOffset: Defines how far the user needs to move their finger from the region to deactivate a pressed button. This offset value includes the hitSlop value, too.
+- 
+
+```js
+import React, {useState} from 'react'
+import {Button, Text, View, Pressable, SafeAreaView, TouchableOpacity} from 'react-native'
+
+const App = () => {
+  const [touchPressed, setTouchPressed] = useState(false);
+
+  return(<SafeAreaView style={{marginTop:25, alignItems:'center'}}>
+    <Button title="click me" color="green" onPress={()=>alert("Clicked")}/>
+    <TouchableOpacity style={{backgroundColor: touchPressed ?'green' :'red', borderRadius:5, padding:5 }}
+      onPressIn={()=>setTouchPressed(true)}
+      onPressOut={()=>setTouchPressed(false)}
+      activeOpacity={1}
+      onLongPress={()=>console.log('Long Pressed')}
+      hitSlop={{top: 100, left: 50, right: 50, bottom: 100}}
+      pressRetentionOffset={200}
+    >
+      <Text style={{color:'#fff'}}>Touchable Opacity Button</Text>
+    </TouchableOpacity>
+  </SafeAreaView>)
+}
+
+export default App;
+```
+
 - callbacks : We can attach functions to various events in a particular touch event flow with the onPress, onPressIn, onPressOut, and onLongPress callbacks.
 
 React Native offers four different touchable components to handle basic user gestures. In below table I have given the differences among them. No need to go in details because all these we are going to create using advanced pressable component. It is only for reference.
@@ -63,6 +90,145 @@ As discussed earlier in this session, React Native offers four different touchab
 Instead of offering multiple inbuilt, animated components, as touchable components do, The React Native Pressability API offers us one core component called Pressable. 
 
 In the below example, We will create several buttons with different feedback animations. You can try something else rather then these.
+
+```js
+import React, { useState } from 'react';
+import {
+  SafeAreaView,
+  Pressable,
+  StyleSheet,
+  Text,
+} from 'react-native';
+
+const PressableOpacityButton = ({title, onTap}) => {
+  return (
+    <Pressable
+      onPress={onTap}
+      style={({ pressed }) => [
+        {
+          opacity: pressed
+            ? 0.2
+            : 1,
+          backgroundColor: '#2277ee'
+        },
+        styles.button,
+      ]}>
+        <Text style={styles.buttonText}>{ title }</Text>
+    </Pressable>
+  );
+}
+
+const PressableHighlightButton = ({title, onTap}) => {
+  return (
+    <Pressable
+      onPress={onTap}
+      style={({ pressed }) => [
+        {
+          backgroundColor: pressed
+            ? '#55aaff'
+            : '#2277ee'
+        },
+        styles.button
+      ]}>
+        <Text style={styles.buttonText}>{ title }</Text>
+    </Pressable>
+  );
+}
+
+const ZoomButton = ({title, onTap}) => {
+  return (
+    <Pressable
+      onPress={onTap}
+      style={({ pressed }) => [
+        {
+          transform: [{
+            scale: pressed ? 1.07 : 1
+          }],
+          backgroundColor: '#2277ee'
+        },
+        styles.button
+      ]}>
+        <Text style={styles.buttonText}>{ title }</Text>
+    </Pressable>
+  );
+}
+
+const RotatingButton = ({title, onTap}) => {
+  return (
+    <Pressable
+      onPress={onTap}
+      style={({ pressed }) => [
+        {
+          transform: [{
+            rotate: pressed ? '-5deg' : '0deg'
+          }],
+          backgroundColor: '#2277ee'
+        },
+        styles.button
+      ]}>
+        <Text style={styles.buttonText}>{ title }</Text>
+    </Pressable>
+  );
+}
+
+const ComplexButton = ({title, onTap}) => {
+  return (
+    <Pressable
+      onPress={onTap}
+      android_ripple={{color: '#fff'}}
+      style={({ pressed }) => [
+        pressed && {
+          transform: [{
+            rotate: '-5deg'
+          },{
+            scale: 0.7
+          }]
+        },
+        {
+          backgroundColor: '#2277ee'
+        },
+        styles.button,
+      ]}>
+        {({pressed}) => (
+          <Text style={[styles.buttonText, pressed && {color: '#FFF'}]}>{ title }</Text>
+        )}
+    </Pressable>
+  );
+}
+
+
+const App = () => {
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <PressableOpacityButton title="TouchableOpacity"/>
+      <PressableHighlightButton title="TouchableHighlight"/>
+      <ZoomButton title="Zoom effect"/>
+      <RotatingButton title="Rotation effect"/>
+      <ComplexButton title="Complex effect"/>
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    marginHorizontal: 36,
+  },
+  button: {
+    padding: 12,
+    marginBottom: 20,
+    borderRadius: 6,
+  },
+  buttonText: {
+    fontSize: 20,
+    textAlign: 'center'
+  },
+});
+
+export default App;
+```
 
 ## Difference between Touchable and Pressable
 
@@ -95,4 +261,63 @@ Porps:
 - onPressIn: Callback that is called when a touch is engaged.
 - onPressOut: Callback that is called when a touch is released.
 - onFocus: Callback that is called when the text input is focused.
+
+```js
+import React, {useState} from "react";
+import { SafeAreaView, StyleSheet, TextInput, Platform,TouchableOpacity, Text } from "react-native";
+
+const App = () => {
+  const [text, onChangeText] = useState("");
+  const [number, onChangeNumber] = useState("");
+
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <TextInput
+        style={styles.input}
+        onChangeText={onChangeText}
+        value={text}
+        placeholder={"Enter Name"}
+      />
+      <TextInput
+        style={styles.input}
+        onSubmitEditing={(event) => onChangeNumber(event.nativeEvent.text)}
+        value={number}
+        onChangeText={onChangeNumber}
+        placeholder="Enter Age"
+        keyboardType="numeric"
+      />
+      <TouchableOpacity onPress={() => alert(`${text} - ${number} `)} style={styles.button}>
+        <Text style={styles.btnText}>SUBMIT</Text>
+      </TouchableOpacity>
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container : {
+    marginTop: Platform.OS === "android" ? 24 : 0
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 10,
+  },
+  button:{
+    backgroundColor:'red',
+    marginHorizontal:10,
+    borderRadius:5,
+    padding:5,
+    alignItems:'center'
+  },
+  btnText:{
+    color:'#FFF'
+  }
+});
+
+export default App;
+```
+
 

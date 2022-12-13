@@ -19,11 +19,22 @@ React Native
   - Native Styling
   - Platform Dependent Code.
 - Week 2
-  1. React Native Architecture
-  2. API calls
-  3. Introduction to Navigation
-  4. Navigation bar, drawer, etc
-  5. debugging
+  - AsyncStorage
+  - Modal
+  - Alert
+  - API calls
+  - SQL Lite
+  - React Native Architecture
+  - React Native Security
+  - Animated View
+  - Navigation
+    - Native Stack
+    - Passing Parameter to routes
+    - Bottom Tab
+    - Tab With Stack
+    - Drawer
+    - Bottom Tab With Drawer
+    - Drawer With Bottom Tab and Stack Navigator
 - Week 3
   1. Using System Modules - 1
   2. Using System Modules - 2

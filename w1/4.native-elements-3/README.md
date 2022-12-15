@@ -3,6 +3,9 @@
 - Native core components
   - FlatList
   - NestedList
+  - SectionList
+  - StatusBar
+  - Icons
 
 ### Coding
 
@@ -10,4 +13,4 @@
    - Task List using FlatList.
    - Add Category wise Product App.
 2. Assignments
-   - Add a Product in category wise product list.
+   - Todo List with Icons, updating StatusBar

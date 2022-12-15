@@ -1,3 +1,5 @@
+```js
+
 import { openDatabase } from 'expo-sqlite';
 import React, {useEffect, useState} from 'react'
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
@@ -128,3 +130,5 @@ const SingleTask = ({todo}) => {
     <Text style={[styles.todo, styles.border]}>{todo.task}</Text>
   </View>)
 }
+
+```

@@ -37,8 +37,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    if(counter !== null)
-      storeData("counter", counter);
+    if (counter !== null) storeData("counter", counter);
   }, [counter, setCounter]);
 
   useEffect(() => {
@@ -55,7 +54,7 @@ const App = () => {
       style={{
         flexDirection: "row",
         alignItem: "center",
-        justifyContent: "center"
+        justifyContent: "center",
       }}
     >
       <TouchableOpacity onPress={dec}>
@@ -73,10 +72,12 @@ const App = () => {
       }}>
         <Text>Get Data</Text>
       </TouchableOpacity> */}
-      <TouchableOpacity onPress={()=>{
-        storeData('counter',0);
-        setCounter(0);
-      }}>
+      <TouchableOpacity
+        onPress={() => {
+          storeData("counter", 0);
+          setCounter(0);
+        }}
+      >
         <Text>Reset Data</Text>
       </TouchableOpacity>
     </View>
@@ -87,73 +88,87 @@ export default App;
 ```
 
 ```js
-import React, {useState, useEffect} from "react";
-import { SafeAreaView, StyleSheet, TextInput, Platform,TouchableOpacity, Text } from "react-native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState, useEffect } from "react";
+import {
+  SafeAreaView,
+  StyleSheet,
+  TextInput,
+  Platform,
+  TouchableOpacity,
+  Text,
+} from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const storeData = async (key,value) => {
+const storeData = async (key, value) => {
   try {
-    await AsyncStorage.setItem(key, value)
+    await AsyncStorage.setItem(key, value);
   } catch (e) {
     // saving error
   }
-}
-
+};
 
 const getData = async (key) => {
   try {
-    const value = await AsyncStorage.getItem(key)
+    const value = await AsyncStorage.getItem(key);
     return value;
-  } catch(e) {
+  } catch (e) {
     // error reading value
     return null;
   }
-}
+};
 
 const removeData = async (key) => {
   try {
-    await AsyncStorage.removeItem(key)
+    await AsyncStorage.removeItem(key);
     return true;
-  } catch(e) {
+  } catch (e) {
     // error reading value
     return false;
   }
-}
-
+};
 
 const App = () => {
   const [no, setNo] = useState();
 
-useEffect(()=>{
-  getData("app-opened").then(prevNo => {
-    storeData("app-opened",prevNo ? parseInt(prevNo)+1 : 0) ;
-    getData("app-opened").then(v => setNo(v))
-  })
-  
-},[])
+  useEffect(() => {
+    getData("app-opened").then((prevNo) => {
+      storeData("app-opened", prevNo ? parseInt(prevNo) + 1 : 0);
+      getData("app-opened").then((v) => setNo(v));
+    });
+  }, []);
 
-  return(<SafeAreaView style={styles.container}>
-    <Text style={{textAlign:'center', fontSize:18}}>Track Number of Times App Opened</Text>
-    <Text style={{textAlign:'center', fontSize:25}}>{no}</Text>
-    <TouchableOpacity onPress={async()=> {await removeData('app-opened'); setNo(0);}} style={styles.btn}>
-      <Text style={{color:'#FFF'}}>Reset Data</Text>
-    </TouchableOpacity>
-  </SafeAreaView>)
-}
+  return (
+    <SafeAreaView style={styles.container}>
+      <Text style={{ textAlign: "center", fontSize: 18 }}>
+        Track Number of Times App Opened
+      </Text>
+      <Text style={{ textAlign: "center", fontSize: 25 }}>{no}</Text>
+      <TouchableOpacity
+        onPress={async () => {
+          await removeData("app-opened");
+          setNo(0);
+        }}
+        style={styles.btn}
+      >
+        <Text style={{ color: "#FFF" }}>Reset Data</Text>
+      </TouchableOpacity>
+    </SafeAreaView>
+  );
+};
 
 export default App;
 
 const styles = StyleSheet.create({
-  container : {
-    marginTop: Platform.OS === "android" ? 24 : 0
+  container: {
+    marginTop: Platform.OS === "android" ? 24 : 0,
   },
-  btn:{
-    backgroundColor:'#993300',
-    borderRadius:5,
-    padding:5,
-    margin:10,
-    alignItems:'center'
-  }
+  btn: {
+    backgroundColor: "#993300",
+    borderRadius: 5,
+    padding: 5,
+    margin: 10,
+    alignItems: "center",
+  },
 });
 ```
 
@@ -165,14 +180,22 @@ The Modal component is a basic way to present content above an enclosing view.
 
 - inherits `View` Props
 - visible: `true or false` : determines the visibility of modal
-- onRequestClose: `function` : It is called when the user taps hardware back button on android or the menu button on IOS. 
+- onRequestClose: `function` : It is called when the user taps hardware back button on android or the menu button on IOS.
 - animationType: `none, slide, fade` : controls modal animation, default is none
 - onShow: `function` : The passed function will be called once the modal is shown
 - transparent: `true or false` : If true renders the modal over a transparent background and fill the entire view.
 
 ```js
 import React, { useState } from "react";
-import { Alert, Modal, StyleSheet, Text, Pressable, View, TouchableOpacity } from "react-native";
+import {
+  Alert,
+  Modal,
+  StyleSheet,
+  Text,
+  Pressable,
+  View,
+  TouchableOpacity,
+} from "react-native";
 
 const App = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -187,23 +210,24 @@ const App = () => {
           setModalVisible(!modalVisible);
         }}
       >
-      <TouchableOpacity 
-        style={{backgroundColor:'rgba(153, 153, 102,0.5)', flex:1}} 
-        onPress={() => setModalVisible(false)}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World!</Text>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}
-            >
-              <Text style={styles.textStyle}>Hide Modal</Text>
-            </Pressable>
+        <TouchableOpacity
+          style={{ backgroundColor: "rgba(153, 153, 102,0.5)", flex: 1 }}
+          onPress={() => setModalVisible(false)}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>Hello World!</Text>
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => setModalVisible(!modalVisible)}
+              >
+                <Text style={styles.textStyle}>Hide Modal</Text>
+              </Pressable>
+            </View>
           </View>
-        </View>
         </TouchableOpacity>
       </Modal>
-      <Text style={{marginBottom:180, fontSize:22}}>Modal Example</Text>
+      <Text style={{ marginBottom: 180, fontSize: 22 }}>Modal Example</Text>
       <Pressable
         style={[styles.button, styles.buttonOpen]}
         onPress={() => setModalVisible(true)}
@@ -219,7 +243,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22
+    marginTop: 22,
   },
   modalView: {
     margin: 20,
@@ -230,16 +254,16 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5
+    elevation: 5,
   },
   button: {
     borderRadius: 20,
     padding: 10,
-    elevation: 2
+    elevation: 2,
   },
   buttonOpen: {
     backgroundColor: "#F194FF",
@@ -250,12 +274,12 @@ const styles = StyleSheet.create({
   textStyle: {
     color: "white",
     fontWeight: "bold",
-    textAlign: "center"
+    textAlign: "center",
   },
   modalText: {
     marginBottom: 15,
-    textAlign: "center"
-  }
+    textAlign: "center",
+  },
 });
 
 export default App;
@@ -271,36 +295,28 @@ import { View, StyleSheet, Button, Alert } from "react-native";
 
 const App = () => {
   const createTwoButtonAlert = () =>
-    Alert.alert(
-      "Alert Title",
-      "My Alert Msg",
-      [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
-        },
-        { text: "OK", onPress: () => console.log("OK Pressed") }
-      ]
-    );
+    Alert.alert("Alert Title", "My Alert Msg", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      { text: "OK", onPress: () => console.log("OK Pressed") },
+    ]);
 
   const createThreeButtonAlert = () =>
-    Alert.alert(
-      "Alert Title",
-      "My Alert Msg",
-      [
-        {
-          text: "Ask me later",
-          onPress: () => console.log("Ask me later pressed")
-        },
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
-        },
-        { text: "OK", onPress: () => console.log("OK Pressed") }
-      ]
-    );
+    Alert.alert("Alert Title", "My Alert Msg", [
+      {
+        text: "Ask me later",
+        onPress: () => console.log("Ask me later pressed"),
+      },
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      { text: "OK", onPress: () => console.log("OK Pressed") },
+    ]);
 
   return (
     <View style={styles.container}>
@@ -308,17 +324,17 @@ const App = () => {
       <Button title={"3-Button Alert"} onPress={createThreeButtonAlert} />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "space-around",
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 });
 
-export default App
+export default App;
 ```
 
 ## Networking
@@ -342,7 +358,7 @@ For this purpose we can use inbuilt `fetch` or third party networking library `a
 fetch('https://jsonplaceholder.typicode.com/posts')
   .then(response => response.json())    // one extra step
   .then(data => {
-    console.log(data) 
+    console.log(data)
   })
   .catch(error => console.error(error));
 ```
@@ -352,10 +368,10 @@ fetch('https://jsonplaceholder.typicode.com/posts')
 ```js
 // axios
 
-const url = 'https://jsonplaceholder.typicode.com/posts'
+const url = "https://jsonplaceholder.typicode.com/posts";
 const data = {
-  title: 'This is title',
-  body: 'This is body',
+  title: "This is title",
+  body: "This is body",
   userId: 1,
 };
 axios
@@ -365,30 +381,30 @@ axios
       "Content-Type": "application/json;charset=UTF-8",
     },
   })
-  .then(({data}) => {
+  .then(({ data }) => {
     console.log(data);
-});
+  });
 
 // fetch()
 
-    const url = "https://jsonplaceholder.typicode.com/posts";
-    const options = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
-      },
-      body: JSON.stringify({
-        title: 'This is title',
-        body: 'This is body',
-        userId: 1,
-      }),
-    };
-    fetch(url, options)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-      });
+const url = "https://jsonplaceholder.typicode.com/posts";
+const options = {
+  method: "POST",
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json;charset=UTF-8",
+  },
+  body: JSON.stringify({
+    title: "This is title",
+    body: "This is body",
+    userId: 1,
+  }),
+};
+fetch(url, options)
+  .then((response) => response.json())
+  .then((data) => {
+    console.log(data);
+  });
 ```
 
 Notice that:
@@ -399,7 +415,3 @@ Notice that:
 - With Axios, the data response provided by the server can be accessed with in the [data object](https://github.com/axios/axios#response-schema), while for the fetch() method, the final data can be named any variable.
 
 [Json Placeholder Typicode Guide](https://jsonplaceholder.typicode.com/guide/)
-
-
-
-

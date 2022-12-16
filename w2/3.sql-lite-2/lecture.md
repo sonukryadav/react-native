@@ -1,5 +1,17 @@
-```js
+# SQLite Project Part 1
 
+Implementation of:
+
+- Open Database
+- Create Table
+- Insert data into table
+- Select all data from table
+
+## Project : Task List part 1
+
+    - User should have the ability to add task to the list
+
+```js
 import { openDatabase } from 'expo-sqlite';
 import React, {useEffect, useState} from 'react'
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
@@ -12,7 +24,6 @@ const db = openDatabase("subrat.db");
 // db.transaction(txn => {
 //   txn.executeSql(query, params, successfully(), error())
 // })
-
 
 
 export function ExecuteSql(db, query, params=[]) {
@@ -130,5 +141,4 @@ const SingleTask = ({todo}) => {
     <Text style={[styles.todo, styles.border]}>{todo.task}</Text>
   </View>)
 }
-
-```
+```    

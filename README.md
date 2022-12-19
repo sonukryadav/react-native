@@ -23,9 +23,12 @@ React Native
   - Modal
   - Alert
   - API calls
-  - SQL Lite
+  - SQLite
   - React Native Architecture
   - React Native Security
+  - SQLite Task List Project with CURD Operations
+  - Generate distribution ready release APK for android
+- Week 3  
   - Animated View
   - Navigation
     - Native Stack
@@ -35,13 +38,11 @@ React Native
     - Drawer
     - Bottom Tab With Drawer
     - Drawer With Bottom Tab and Stack Navigator
-- Week 3
-  1. Using System Modules - 1
-  2. Using System Modules - 2
-  3. Using Redux
-  4. Using UI Library
 - Week 4
-  1. SDK vs Xcode
-  2. Android Specific Development
-  3. IOS Specific development
-  4. Permission & deployment to store
+    - Using Camera
+    - Using Sensor
+    - Different Other packages overview
+    - Using Redux
+    - Using UI Library
+    - Deploy to google play store
+    

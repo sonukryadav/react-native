@@ -39,7 +39,7 @@ React Native
     - Bottom Tab With Drawer
     - Drawer With Bottom Tab and Stack Navigator
   - Most used packages overview
-  - Using Redux
+  - Using Mobx
   - Using UI Library    
 - Week 4
   - Using Camera

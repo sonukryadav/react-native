@@ -38,11 +38,11 @@ React Native
     - Drawer
     - Bottom Tab With Drawer
     - Drawer With Bottom Tab and Stack Navigator
+  - Most used packages overview
+  - Using Redux
+  - Using UI Library    
 - Week 4
-    - Using Camera
-    - Using Sensor
-    - Different Other packages overview
-    - Using Redux
-    - Using UI Library
-    - Deploy to google play store
+  - Using Camera
+  - Using Sensor
+  - Deploy to google play store
     

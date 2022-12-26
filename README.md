@@ -43,6 +43,16 @@ React Native
   - Using UI Library    
 - Week 4
   - Using Camera
+  - Text to Speach
+  - Basic Text to Speach App
   - Using Sensor
+  - Using Location
+  - Creating Step Count App
+  - Testing with Jest
   - Deploy to google play store
+- Week 5
+  - Firebase Authentication
+  - Firebase Cloud Messaging
+  - Real Time Database
+  - Simple Group Chat App
     

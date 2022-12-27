@@ -48,11 +48,11 @@ React Native
   - Using Sensor
   - Using Location
   - Creating Step Count App
-  - Testing with Jest
-  - Deploy to google play store
+  - Responding to Gestures
 - Week 5
   - Firebase Authentication
   - Firebase Cloud Messaging
   - Real Time Database
   - Simple Group Chat App
+  - Deploy to google play store
     

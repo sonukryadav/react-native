@@ -2,6 +2,7 @@
 Create a page as given below.
 
 - The button should only be enabled when at least two photos updated.
+- Appropriate styling should be used for disabled button.
 - Store everything on async storage(After refresh or reopening the page all the photos should be in their place).
 
 

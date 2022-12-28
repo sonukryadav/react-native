@@ -1,9 +1,9 @@
 
 Create a page as given below.
 
-- The button should only be enabled when at least two photos updated.
-- Appropriate styling should be used for disabled button.
-- Store everything on async storage(After refresh or reopening the page all the photos should be in their place).
+- The button should only be enabled when at least two photos are updated.
+- Appropriate styling should be used for the disabled button.
+- Store everything on async storage(After refreshing or reopening the page all the photos should be in their place).
 
 
 ![](https://firebasestorage.googleapis.com/v0/b/mymasai-school.appspot.com/o/project_files%2Fw4d1assignment.JPEG?alt=media&token=9b589d2e-8698-4bf0-a2c7-61032a81f7a3)

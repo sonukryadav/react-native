@@ -15,7 +15,7 @@ If you have already created a React Native app then add expo sdk to it.
 ```js
 npx react-native init stepcount
 cd stepcount
-npx install expo-modules@latest
+npx install-expo-modules@latest
 ```
 
 Update android/build.gradle

@@ -10,6 +10,19 @@ npx create-expo-app fcmApp
 npx expo run:android
 ```
 
+```js
+allprojects {
+    repositories {
+        ...
+        maven {
+            // Android JSC is installed from npm
+            url("$rootDir/../node_modules/jsc-android/dist")
+        }
+        ...
+    }
+}            
+```
+
 Before proceding further please further please confirm that your have installed `firebase app`, If not please follow the below steps to install.
 
 ## Install Firebase App

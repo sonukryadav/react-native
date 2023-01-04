@@ -27,8 +27,6 @@ Before proceding further please further please confirm that your have installed 
 
 ## Install Firebase App
 
-[Firebase intro PPT](https://drive.google.com/file/d/17XZPHVqR-VX0EinWmCQg9mdd6b-lDbOi/view)
-
 ```js
 # Using npm install firebase app
 npm install --save @react-native-firebase/app

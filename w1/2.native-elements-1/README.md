@@ -1,10 +1,13 @@
-### Native Elements
+### Native Elements - 1
 
-- Expo introduction
-- Native core components
-  - Touchable
-  - Pressable
-  - TextInput
+- Expo and React Native
+- Custom Buttons using Touchable Opacity and Pressable
+  - Touchable Opacity
+  - difference between Touchable Opacity, TouchableWithoutFeedback, TouchableNativeFeedback
+  - Pressable Component
+  - Difference between Touchable and Pressable
+  - Which to be used touchable or Pressable
+- TextInput in React Native
 
 ### Coding
 

@@ -1,9 +1,13 @@
-## Topics
+## Storage and API Integration
 
-1. Async Storage
-2. Modal
-3. Alert
-4. Networking
+- AsyncStorage / Localstorage
+  - Counter App
+  - App to Display number of times the app is opened.
+- Modal
+- Alert
+- Networking
+  - GET Request
+  - POST Request
 
 # Coding:
 

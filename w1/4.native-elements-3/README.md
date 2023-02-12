@@ -1,11 +1,10 @@
 ### Native Elements 3
 
-- Native core components
-  - FlatList
-  - NestedList
-  - SectionList
-  - StatusBar
-  - Icons
+- FlatList
+- NestedList
+- Pull to Refresh flatlist
+- SectionList with Columns
+- Vector Icons
 
 ### Coding
 

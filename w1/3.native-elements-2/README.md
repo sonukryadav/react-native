@@ -1,10 +1,12 @@
 ### Native Elements 2
 
-- Native core components
-  - Image
-  - List of elements
-  - ScrollView instead of List
-  - Pull to Refresh ScrollView
+- Image in React Native
+  - Image Props
+  - Simple Gallery
+- Showing list of items using map
+- ScrollView
+  - Horizontal and Vertical Scrollview
+  - Pull to Refresh
 
 ### Coding
 

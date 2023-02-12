@@ -1,10 +1,15 @@
 ## Introduction to React native
 
-1. What is React native ?
-2. Gettign started ?
-3. Styling in React native
-4. Platform specific code.
-5. Text, View, Button
+- Introduction to React Native
+- Styling in React Native
+  - Inline
+  - Internal
+  - External
+- Display Flex Property
+- Platform Specific Code
+  - Using Platform Module
+  - Using Platform Specific File Extension
+- Button
 
 # Coding:
 

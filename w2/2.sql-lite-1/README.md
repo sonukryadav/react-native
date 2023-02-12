@@ -1,12 +1,15 @@
-## Topics
+## RN Architecture, Securrity and SQL Lite 1
 
-1. SQL Lite Storage
-2. SQLite CRUD operations
-3. React Native Architecture
-4. Security
-5. Storing Sensitive Info
-6. Firebase AppCheck
-7. SSL Pinning
+- SQL Lite
+  - Use Database
+  - Basic CRUD Operations
+  - Create Table
+  - Insert data into table
+  - Delete table
+- React Native Architecture
+- Security
+- Firebase ApCheck
+- SSL Pinning
 
 # Coding:
 

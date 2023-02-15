@@ -36,7 +36,7 @@ const App = () => {
 export default App;
 ```
 
-In the above two examples the View and Text are imported from react-native. These are not HTML elements, but in React we are using HTML elements like div and p. HTML elements are rendered in a browser. But These React Native elements we are using with in Mobile development. On Android we are using <ViewGroup> and on IOS <UIView>. While generating APK or AAB for android and IPA for IOS, View will generate ViewGroup in case of android and UIView in case of IOS (How? we will discuss in later sessions).
+In the above example the View and Text are imported from react-native. These are not HTML elements, but in React we are using HTML elements like div and p. HTML elements are rendered in a browser. But These React Native elements we are using with in Mobile development. On Android we are using <ViewGroup> and on IOS <UIView>. While generating APK or AAB for android and IPA for IOS, View will generate ViewGroup in case of android and UIView in case of IOS (How? we will discuss in later sessions).
   
   
 No need to remember, but have a look at the below table for better understanding.
@@ -198,58 +198,8 @@ Generally we write Hybrid app to take the benefit of using it on both platforms.
 1. Using Platform module
 2. Using Platform-specific file extension
 
-### Example of using Platform module  
+### Ex: Platform Specific Top Margin
   
-```js
-import React from "react";
-import { SafeAreaView, View, Text, StyleSheet, Platform } from "react-native";
-
-const App = () => {
-  return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.text}>Hello World!</Text>
-      <View style={{...styles.container, ...styles1.rowSpaceBetween}}>
-        <Text style={{...styles.text1, flex:1}}>Text 1</Text><Text style={{...styles.text1, flex:2}}>Text 2</Text>
-      </View>
-    </SafeAreaView>
-  );
-};
-
-export default App;
-
-
-const styles = StyleSheet.create({
-  
-  container: {
-    backgroundColor: Platform.select({
-      ios: '#333399',
-      android:'#333300',
-      web:'#669999'
-    }), 
-    paddingTop: Platform.OS === 'android' ? 25 : 0,
-    paddingBottom:10,
-    paddingHorizontal:10,
-  },
-  text : {
-    color:'#fff',
-  },
-  text1 : {
-    overflow:'hidden', // required for IOS
-    backgroundColor: '#fff',
-  	borderRadius: 10,
-    padding:5,
-    marginHorizontal:10,
-  }
-})
-
-const styles1 = StyleSheet.create({
-  rowSpaceBetween : {
-    flexDirection:'row',
-    justifyContent: 'space-between'
-  }
-})  
-```  
-
 ```js
 import {View, Text, StyleSheet, Platform} from 'react-native'
 
@@ -289,7 +239,8 @@ const generalStyles = StyleSheet.create({
 
 const container = StyleSheet.compose(styles.container, generalStyles.row)
 ```
-  
+
+### Ex: Platform Specific Background Color App  
   
 ### Using platform specific file extension  
   

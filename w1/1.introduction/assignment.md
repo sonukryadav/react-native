@@ -10,6 +10,7 @@
 
 ## Hints
 - Button is created from `View`.
+- For gradient color of button use [this](https://www.npmjs.com/package/react-native-linear-gradient) or any npm package of your choice.
 
 
 - screenshot-1

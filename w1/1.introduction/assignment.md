@@ -1,5 +1,4 @@
 
-<<<<<<< HEAD
 ## Task for the day
   
 - Create a Counter App
@@ -25,6 +24,3 @@
 
 - screenshot-2
 ![](https://firebasestorage.googleapis.com/v0/b/mymasai-school.appspot.com/o/react-native-v3%2Fbutton_of_interests_screen.JPEG?alt=media&token=b69c83af-3d58-4b86-a618-dab94f62d361)
-
-
->>>>>>> 9ed1cdf7f5da3bc9f58138d15406930fefba812c

@@ -270,7 +270,6 @@ const App = () => {
   const [text, onChangeText] = useState("");
   const [number, onChangeNumber] = useState("");
 
-
   return (
     <SafeAreaView style={styles.container}>
       <TextInput

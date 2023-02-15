@@ -14,6 +14,8 @@
 # Coding:
 
 1. Live:
-   - Counter Component.
+   - Hello World App.
+   - Platform Specific UI App.
+
 2. Assignment:
-   - Stopwatch with 3 buttons(start, pause, reset).
+   - Create Interests Screen UI.

@@ -87,15 +87,15 @@ let interest = [
   },
   {
     interest: "Meditation",
-    selected: false
+    selected: false,
   },
   {
     interest: "mindfulness",
-    selected: false
+    selected: false,
   },
   {
     interest: "Volunteering",
-    selected: false
+    selected: false,
   },
 ];
 

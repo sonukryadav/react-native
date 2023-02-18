@@ -137,7 +137,7 @@ export default function App() {
             })
           }
         </View>
-        <View style={count === 5 ? (styles.text5) : (styles.text4)}><Button title={count == 5 ? ("CONTINUE") : (`CONTNUE ${count}/5`)} color="black" onPress={() => { count === 5 ? Alert.alert("DONE!!!") : (Alert.alert("Select the 5 interest first")) }} /></View>
+        <View style={count === 5 ? (styles.text5) : (styles.text4)}><Button title={count == 5 ? ("CONTINUE") : (`CONTINUE ${count}/5`)} color="black" onPress={() => { count === 5 ? Alert.alert("DONE!!!") : (Alert.alert("Select the 5 interest first")) }} /></View>
 
         <View style={[styles.text4, { borderColor: "red" }]}><Button title="Set count to 0" color="black" onPress={zero} /></View>
       </ScrollView>

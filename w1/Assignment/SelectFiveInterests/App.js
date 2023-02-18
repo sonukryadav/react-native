@@ -4,7 +4,6 @@ import { Text, View, StyleSheet, Platform, ScrollView, Button, Alert } from 'rea
 import Constants from 'expo-constants';
 
 // or any pure javascript modules available in npm
-import { Card } from 'react-native-paper';
 let interest = [
   {
     interest: "Traveling",

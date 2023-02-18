@@ -120,7 +120,7 @@ export default function App() {
     interest.map(val => {
       val.selected = false;
     })
-    setCount(0)
+    setCount(0);
   }
 
   return (

@@ -130,7 +130,7 @@ export default function App() {
         <Text style={styles.text2}>Let everyone know what you're passionate about by adding to your profile. </Text>
         <View style={styles.container2}>
           {
-            interest.map((val, ind) => {
+            interest.map((val, ind, array) => {
               return (
                 <View style={[{ ...styles.text3 }, {}]}><Button title={val.interest} color={val.selected ? "teal" : "black"} onPress={() => countfun(ind)} /></View>
               );

@@ -12,8 +12,9 @@
 ### Coding
 
 1. Live:
-   - Counter with a TextInput
-   - Pressable/Touable to create button
+   - App with Pressable/Touable Components
+      - Create a list of touchable components from an array using map
+      - Create a touchable button which will show all the clicked list items
 
 2. Assignments:
    - Creata a SignIn Page

@@ -1,3 +1,5 @@
+# [Expo Sensor](https://docs.expo.dev/versions/latest/sdk/sensors/)
+
 # Step Count Project - Using expo-sensor API
 
 [download apk](https://drive.google.com/file/d/1igLIRBcW8XZcLYc1myes8WqCFYeXW932/view?usp=sharing)

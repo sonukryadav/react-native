@@ -36,7 +36,7 @@ export default function App() {
   })
   const[active, setActive] = React.useState(true);
   const invalid = `Your password is weak, it should have : \n- password should be of 8 characters length \n- password should contain\n- uppercase letter\n- lowercase letter\n- number\n- special character`;
-  
+
   const inputs =(name, value)=>{
     setInput({...input, [name] : value});
   }

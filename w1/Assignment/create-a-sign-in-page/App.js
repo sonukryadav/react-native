@@ -75,6 +75,7 @@ export default function App() {
     <SafeAreaView style={styles.container}>
     <ScrollView>
     <Text style={styles.text1}>Login Page</Text>
+    {/* <Text>Email : {input.email} {`\n`} Password : {input.password}</Text> */}
     <TextInput 
     style={styles.input1}
     placeholder="Enter Email"

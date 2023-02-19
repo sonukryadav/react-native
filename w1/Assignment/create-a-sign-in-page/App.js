@@ -76,14 +76,14 @@ export default function App() {
     <ScrollView>
     <Text style={styles.text1}>Login Page</Text>
     {/* <Text>Email : {input.email} {`\n`} Password : {input.password}</Text> */}
-    <TextInput 
+    <TextInput
     style={styles.input1}
     placeholder="Enter Email"
     value = {input.email}
     onChangeText={(email)=>inputs("email", email)}
     keyboardType="email-address"
     />
-    <TextInput 
+    <TextInput
     style={styles.input1}
     placeholder="Enter Password"
     value = {input.password}

@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "create-a-task-list-app",
+    "slug": "snack-8245ac14-3443-4f4e-be16-35464a74174b",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "description": "1. On pulling down it should display a card on top having 2 buttons: add & delete.\n2. Pressing Add will add a task to the list and Pressing Delete will delete the first task from list."
+  }
+}

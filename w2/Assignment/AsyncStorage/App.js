@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, ScrollView, RefreshControl } from 'react-native';
 import { storeData } from './storageHelper/storeData';
 import { getData } from './storageHelper/getData';
 
 export default function App(){
   const [count, setCount] = useState(0);
   const [st, setSt] = useState(-1);
+  const [refreshing, setRefreshing] = useState(false);
 
   const counter = ()=>{
         setCount(count+1);
@@ -16,25 +17,46 @@ export default function App(){
   }
 
   useEffect(() => {
-    storeData("Counter", count)
-  },[count])
+    storeData("counter", JSON.stringify(count));
+    getData('counter').then(dt => {
+      setCount(dt);
+    })
+  }, [count])
+
+
+  const fresh1 = () => {
+    console.log("jk")
+  }
 
   return (
-    <SafeAreaView style = {styles.view1}>
-      <Text style={styles.text0}>Counter App</Text>
-      <View style={styles.view2}>
-        <TouchableOpacity style={styles.button1} onPress={counterM}>
-          <Text style={{ ...styles.text2, textAlign: "center" }}>-1</Text>
-        </TouchableOpacity>
-
-        <Text style={styles.text1}>{count}</Text>
-
-        <TouchableOpacity style={styles.button1} onPress={counter}>
-          <Text style={{ ...styles.text2, textAlign:"center"}}>+1</Text>
-        </TouchableOpacity>
-
-      </View>
-    </SafeAreaView>
+    <>
+    <SafeAreaView style={styles.view1}>
+      <ScrollView refreshControl={
+          <RefreshControl refreshing={ refreshing } onRefresh={fresh1} />
+        }
+      >
+            <Text style={styles.text0}>Counter App</Text>
+      
+            <View style={styles.view2}>
+              <TouchableOpacity style={styles.button1} onPress={counterM}>
+                <Text style={{ ...styles.text2, textAlign: "center" }}>-1</Text>
+              </TouchableOpacity>
+      
+              <Text style={styles.text1}>{count}</Text>
+      
+              <TouchableOpacity style={styles.button1} onPress={counter}>
+                <Text style={{ ...styles.text2, textAlign:"center"}}>+1</Text>
+              </TouchableOpacity>
+            </View>
+      
+            <View>
+              <Text>{ st}</Text>
+              <Text>ddddddddddddddd</Text>
+            </View>
+        
+      </ScrollView>
+      </SafeAreaView>
+    </>
   );
 }
 

@@ -19,7 +19,7 @@ export default function App(){
   useEffect(() => {
     storeData("counter", JSON.stringify(count));
     getData('counter').then(dt => {
-      setCount(dt);
+      setCount(JSON.parse(dt));
     })
   }, [count])
 
@@ -30,7 +30,8 @@ export default function App(){
 
   return (
     <>
-    <SafeAreaView style={styles.view1}>
+      <SafeAreaView style={styles.view1}>
+        
       <ScrollView refreshControl={
           <RefreshControl refreshing={ refreshing } onRefresh={fresh1} />
         }

@@ -3,7 +3,7 @@ const getData = async (key) => {
     try {
         const value = await AsyncStorage.getItem(key);
         if (value) {
-            // value previously stored
+            console.log(`Retrieved data from local storage ${value} `);
             return value;
         } else {
             return null;

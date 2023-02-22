@@ -4,14 +4,14 @@ const setData = async (key, value) => {
     try {
         let Key = JSON.stringify(key);
 
-        let stored = await getData(Key) || [];
+        let stored = await getData(key) || [];
         stored.push(value);
 
-        console.log(stored);
+        // console.log(stored);
 
         let Value = JSON.stringify(stored);
         await AsyncStorage.setItem(Key, Value);
-        console.log(`${key, Value} stored.`);
+        // console.log(`${key, Value} stored.`);
     } catch (err) {
         console.log(err);
     }

@@ -13,16 +13,15 @@ export default function App() {
   const storeData = async () => {
     let ss1 = await getData("todo");
     setSs(ss1);
-    console.log(ss1)
   }
-  
-  React.useEffect(async() => {
-    storeData();
-  }, []);
 
-  const add = async() => {
+  React.useEffect(() => {
+    storeData();
+  }, [ss]);
+
+  const add = () => {
     setData("todo", todo);
-    
+    setTodo("");
   }
 
   return (
@@ -49,12 +48,14 @@ export default function App() {
           <Text style={{ textAlign:"center", fontSize:20, fontWeight:"700", color:"white"}}>ADD</Text>
         </TouchableOpacity>
 
-        <FlatList
+        <ScrollView>
+          <FlatList
           data={ss}
           renderItem={({ item }) => (<Text>{item}</Text>)}
-          keyExtractor={(item) => item}
+          keyExtractor={(item) => item+Math.random()}
           style={{marginVertical:30}}
         />
+        </ScrollView>
 
         {/* <Text>{ ss[0]}</Text> */}
 

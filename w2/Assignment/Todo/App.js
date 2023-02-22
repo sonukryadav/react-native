@@ -26,13 +26,17 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+      <ScrollView
+        nestedScrollEnabled={true}
+        style={{
+        padding: 30
+      }}>
 
         <View>
           <Text style={{color:"black", fontSize:25, fontWeight:"800", textAlign:"center"}}>TODO APP</Text>
         </View>
 
-        <View style={{flex:1, marginVertical:35}}>
+        <View style={{ flex: 1, marginVertical: 35}}>
           <TextInput
             placeholderTextColor="black"
             placeholder='Type...'
@@ -48,14 +52,17 @@ export default function App() {
           <Text style={{ textAlign:"center", fontSize:20, fontWeight:"700", color:"white"}}>ADD</Text>
         </TouchableOpacity>
 
-        <ScrollView>
+
           <FlatList
           data={ss}
-          renderItem={({ item }) => (<Text>{item}</Text>)}
+          renderItem={({ item }) => (
+            <Text
+              style={{
+                borderWidth: 1, padding: 5, marginVertical: 5, textAlign: "center",
+              }}>{item}</Text>)}
           keyExtractor={(item) => item+Math.random()}
-          style={{marginVertical:30}}
+          style={{ marginVertical: 30, height: 300}}
         />
-        </ScrollView>
 
         {/* <Text>{ ss[0]}</Text> */}
 
@@ -70,6 +77,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'lightblue',
     paddingTop: 50,
-    padding:30
+    // padding:30
   },
 });

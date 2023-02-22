@@ -8,53 +8,55 @@ export default function App(){
   const [st, setSt] = useState(-1);
   const [refreshing, setRefreshing] = useState(false);
 
-  const counter = ()=>{
-        setCount(count+1);
+  const counter = async ()=>{
+    setCount(count + 1);
+    storeData("counter", JSON.stringify(count));
   }
 
   const counterM = () => {
     setCount(count - 1);
+    storeData("counter", JSON.stringify(count));
   }
 
   useEffect(() => {
-    storeData("counter", JSON.stringify(count));
     getData('counter').then(dt => {
-      setCount(JSON.parse(dt));
+      setSt(JSON.parse(dt));
     })
   }, [count])
 
+  useEffect(() => {
+    storeData("counter", JSON.stringify(0));
+  },[0])
+
 
   const fresh1 = () => {
-    console.log("jk")
+    console.log("Refreshing...");
+    setRefreshing(true);
+    setCount(0);
+    setRefreshing(false);
+    console.log("Refreshing finished.")
   }
 
   return (
     <>
       <SafeAreaView style={styles.view1}>
-        
       <ScrollView refreshControl={
           <RefreshControl refreshing={ refreshing } onRefresh={fresh1} />
         }
       >
             <Text style={styles.text0}>Counter App</Text>
-      
             <View style={styles.view2}>
               <TouchableOpacity style={styles.button1} onPress={counterM}>
                 <Text style={{ ...styles.text2, textAlign: "center" }}>-1</Text>
               </TouchableOpacity>
-      
               <Text style={styles.text1}>{count}</Text>
-      
               <TouchableOpacity style={styles.button1} onPress={counter}>
                 <Text style={{ ...styles.text2, textAlign:"center"}}>+1</Text>
               </TouchableOpacity>
             </View>
-      
             <View>
-              <Text>{ st}</Text>
-              <Text>ddddddddddddddd</Text>
+            <Text style={{fontSize:20,padding:10, textAlign:"center", fontWeight:"800"}}> Data retrieving from local storage - previous value : { st}</Text>
             </View>
-        
       </ScrollView>
       </SafeAreaView>
     </>

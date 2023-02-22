@@ -1,6 +1,1 @@
-Create React Native Calculator with Memory Option.
-
-- All the calculations should be shared on memory
-- Pressing M+ button should display next stored calculation
-- Pressing M- button should display Previous stored calculation
-- Pressing Mc button should clear all stored calculations
+- Create a React Native Calculator.

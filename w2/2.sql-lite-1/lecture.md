@@ -1,104 +1,3 @@
-# SQL Lite Storage on React Native
-
-React Native SQLite is a library that implements a self-contained, serverless, zero-configuration SQL database engine. SQLite is the most widely deployed SQL database engine in the world. The source code for SQLite is in the public domain.
-
-## Installation
-
-```js
-npm install --save react-native-sqlite-storage
-```
-
-## Use Database of SQLite
-
-```js
-import {openDatabase} from 'react-native-sqlite-storage';
-
-...
-
-export const db = openDatabase({name: 'mydatabase1.db'},
-  () => { },
-  error => {
-    console.log("ERROR: " + error);
-  });
-```
-
-## Basic CRUD operation on SQLite
-
-We can use a custom ExecuteSql function which will accept db, query string and optional parameters.
-
-```js
-export function ExecuteSql(db, query: string, params: any[] = []) {
-  return new Promise((resolve, reject) => {
-    db.transaction((txn) => {
-      txn.executeSql(
-        query,
-        params,
-        (tx, res) => resolve(res),
-        (e) => reject(e)
-      );
-    });
-  });
-}
-```
-
-### Create Table
-
-```js
-  // Create Table
-  async CreateTodoTable() {
-    let Table = await ExecuteSql(
-            db,
-            `CREATE TABLE todotable(id INTEGER PRIMARY KEY AUTOINCREMENT, task VARCHAR(20), status INTEGER(1))`,
-          );
-    console.log(Table);
-  }
-```
-
-### Delete Table
-
-```js
-const deleteTable = async (tblName) => {
-  await ExecuteSql(db, `DROP TABLE IF EXISTS ${tblName}`);
-};
-```
-
-### Insert data into table
-
-```js
-ExecuteSql(db, "INSERT INTO todotable (task, status) VALUES (?,?)", [
-  "new Task",
-  0,
-])
-  .then(async (res) => {
-    dbSuccess(res, `Inserted :${res.insertId}`);
-    let data = await ExecuteSql(
-      db,
-      `SELECT * FROM ${tblName} WHERE id=${res.insertId}`
-    );
-    setTodos((prev) => [...prev, data.rows.item(0)]);
-  })
-  .catch((e) => {
-    dbError(e);
-  });
-```
-
-### Update Data
-
-```js
-await ExecuteSql(db, `UPDATE ${tblName} SET task= ? WHERE id=?`, [
-  todoText,
-  id,
-]);
-```
-
-### Delete Data
-
-```js
-await ExecuteSql(db, `DELETE FROM ${tblName} WHERE id=${todo.id}`);
-```
-
-[Practice](https://www.sql-practice.com/)
-
 ## React Native Architecture
 
 When we look at the react native architecture we find two different divisions often interact with each other :
@@ -170,3 +69,29 @@ Using https endpoints could still leave your data vulnerable to interception. Wi
 SSL pinning is a technique that can be used on the client side to avoid this attack. It works by embedding (or pinning) a list of trusted certificates to the client during development, so that only the requests signed with one of the trusted certificates will be accepted, and any self-signed certificates will not be.
 
 When using SSL pinning, you should be mindful of certificate expiry. Certificates expire every 1-2 years and when one does, it’ll need to be updated in the app as well as on the server. As soon as the certificate on the server has been updated, any apps with the old certificate embedded in them will cease to work.
+
+# SQL Lite Storage on React Native
+
+React Native SQLite is a library that implements a self-contained, serverless, zero-configuration SQL database engine. SQLite is the most widely deployed SQL database engine in the world. The source code for SQLite is in the public domain.
+
+## Installation
+
+```js
+npm install --save react-native-sqlite-storage
+```
+
+## Use Database of SQLite
+
+```js
+import {openDatabase} from 'react-native-sqlite-storage';
+
+...
+
+export const db = openDatabase({name: 'mydatabase1.db'},
+  () => { },
+  error => {
+    console.log("ERROR: " + error);
+  });
+```
+
+[Practice](https://www.sql-practice.com/)

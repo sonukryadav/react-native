@@ -70,7 +70,7 @@ export default function App() {
               style={styles.todoText}>{item}</Text>
             </TouchableOpacity>
             )}
-          keyExtractor={(item) => item+Math.random()}
+          keyExtractor={(item) => item.toString()}
           style={styles.flatList1}
         />
 

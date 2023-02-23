@@ -77,12 +77,12 @@ export default function App() {
         <TouchableOpacity
           style={{ borderWidth: 1, backgroundColor: "black", borderRadius: 10, padding: 8 }}
           onPress={() => { removeAllTask("todo"); storeData(); }}
-          disabled={ss == null}
+          disabled={ss.length == 0}
         >
         <Text style={{ textAlign: "center", fontSize: 20, fontWeight: "700", color: "white" }}>Empty Storage</Text>
         </TouchableOpacity>
 
-        <Text onPress={() => Alert.alert("Testing")} style={{marginVertical:30}}>Testing</Text>
+        <Text onPress={ press1} style={{marginVertical:30}}>Testing</Text>
 
       </ScrollView>
       <StatusBar style="auto" />

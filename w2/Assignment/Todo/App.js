@@ -3,12 +3,13 @@ import React from 'react';
 import { StyleSheet, Text, View, SafeAreaView, ScrollView, TextInput, TouchableOpacity, FlatList, Alert} from 'react-native';
 import setData from './AsyncStorage/setData';
 import getData from './AsyncStorage/getData';
+import removeAllTask from './AsyncStorage/removeAllTask';
 
 export default function App() {
   const [todo, setTodo] = React.useState("");
   const [ss, setSs] = React.useState([]);
 
-  let ar = ["jb", "ugub", "igyc"];
+  // let ar = ["jb", "ugub", "igyc"];
 
   const storeData = async () => {
     let ss1 = await getData("todo");
@@ -17,17 +18,18 @@ export default function App() {
 
   React.useEffect(() => {
     storeData();
-  }, [ss]);
+  }, [ss, todo]);
 
   const add = React.useCallback(() => {
     setData("todo", todo);
+    storeData();
     setTodo("");
   }, [todo])
 
 
   const press1 = () => {
-    console.log("df")
-    Alert.alert("sdfvsdf");
+    console.log("touched")
+    Alert.alert("Touched");
   }
 
   return (
@@ -61,20 +63,26 @@ export default function App() {
 
 
           <FlatList
-          data={ss}
+          data={ss.length==0 ? ["No task added"] : ss}
           renderItem={({ item }) => (
             <TouchableOpacity onPress={press1}>
               <Text
-              style={{
-                borderWidth: 1, padding: 5, marginVertical: 5, textAlign: "center", fontWeight: "700",fontSize:15,
-              }}>{item}</Text>
+              style={styles.todoText}>{item}</Text>
             </TouchableOpacity>
             )}
           keyExtractor={(item) => item+Math.random()}
-          style={{ marginVertical: 30, }}
+          style={styles.flatList1}
         />
 
-        {/* <Text>{ ss[0]}</Text> */}
+        <TouchableOpacity
+          style={{ borderWidth: 1, backgroundColor: "black", borderRadius: 10, padding: 8 }}
+          onPress={() => { removeAllTask("todo"); storeData(); }}
+          disabled={ss == null}
+        >
+        <Text style={{ textAlign: "center", fontSize: 20, fontWeight: "700", color: "white" }}>Empty Storage</Text>
+        </TouchableOpacity>
+
+        <Text onPress={() => Alert.alert("Testing")} style={{marginVertical:30}}>Testing</Text>
 
       </ScrollView>
       <StatusBar style="auto" />
@@ -89,4 +97,16 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     // padding:30
   },
+  todoText: {
+    borderWidth: 1,
+    padding: 5,
+    marginVertical: 5,
+    textAlign: "center",
+    fontWeight: "700",
+    fontSize: 15,
+  },
+  flatList1: {
+    marginVertical: 30,
+    maxHeight: 300
+  }
 });

@@ -4,7 +4,7 @@ const getData = async (key) => {
     try {
         let Key = JSON.stringify(key);
         const Value = await AsyncStorage.getItem(Key);
-        return Value != null ? (JSON.parse(Value)): (null);
+        return Value != null ? (JSON.parse(Value)): ([]);
     } catch (err) {
         console.log(err);
     }

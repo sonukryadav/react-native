@@ -4,7 +4,7 @@ const setData = async (key, value) => {
     try {
         let Key = JSON.stringify(key);
 
-        let stored = await getData(key) || [];
+        let stored = await getData(key);
         stored.push(value);
 
         // console.log(stored);

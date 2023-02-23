@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, TextInput, TouchableOpacity, FlatList} from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, ScrollView, TextInput, TouchableOpacity, FlatList, Alert} from 'react-native';
 import setData from './AsyncStorage/setData';
 import getData from './AsyncStorage/getData';
 
@@ -19,9 +19,15 @@ export default function App() {
     storeData();
   }, [ss]);
 
-  const add = () => {
+  const add = React.useCallback(() => {
     setData("todo", todo);
     setTodo("");
+  }, [todo])
+
+
+  const press1 = () => {
+    console.log("df")
+    Alert.alert("sdfvsdf");
   }
 
   return (
@@ -48,20 +54,24 @@ export default function App() {
         <TouchableOpacity
           style={{ borderWidth: 1, backgroundColor: "black", borderRadius: 10, padding: 8 }}
           onPress={add}
+          disabled={ todo.length==0}
         >
-          <Text style={{ textAlign:"center", fontSize:20, fontWeight:"700", color:"white"}}>ADD</Text>
+          <Text style={{ textAlign:"center", fontSize:20,  fontWeight:"700", color:"white"}}>ADD</Text>
         </TouchableOpacity>
 
 
           <FlatList
           data={ss}
           renderItem={({ item }) => (
-            <Text
+            <TouchableOpacity onPress={press1}>
+              <Text
               style={{
-                borderWidth: 1, padding: 5, marginVertical: 5, textAlign: "center",
-              }}>{item}</Text>)}
+                borderWidth: 1, padding: 5, marginVertical: 5, textAlign: "center", fontWeight: "700",fontSize:15,
+              }}>{item}</Text>
+            </TouchableOpacity>
+            )}
           keyExtractor={(item) => item+Math.random()}
-          style={{ marginVertical: 30, height: 300}}
+          style={{ marginVertical: 30, }}
         />
 
         {/* <Text>{ ss[0]}</Text> */}

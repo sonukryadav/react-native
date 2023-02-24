@@ -4,9 +4,6 @@ import { StyleSheet, Text, View, SafeAreaView, ScrollView, TextInput, TouchableO
 import setData from './AsyncStorage/setData';
 import getData from './AsyncStorage/getData';
 import removeAllTask from './AsyncStorage/removeAllTask';
-import editTask from './AsyncStorage/editTask';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
 
 
 const EditModal = ({ modalState, closeModal, children }) => {
@@ -23,9 +20,6 @@ const EditModal = ({ modalState, closeModal, children }) => {
           <View style={{flex:1, borderWidth: 2, borderColor: "black", backgroundColor:"rgba(100,200,200,0.9)", paddingVertical:30, padding:30}}>
             <Text style={{textAlign:"center", fontSize:30, fontWeight:"800"}}>Edit your task</Text>
             { children}
-            {/* <TouchableOpacity>
-              <Text onPress={closeModal} style={{textAlign:"center"}}>Save</Text>
-            </TouchableOpacity> */}
           </View>
         </Modal>
       </SafeAreaView>
@@ -40,8 +34,7 @@ export default function App() {
   const [todo, setTodo] = React.useState("");
   const [ss, setSs] = React.useState([]);
   const [modalState, setModalState] = React.useState(false);
-  const [index, setIndex] = React.useState(-1);
-  const [help, setHelp] = React.useState(true);
+  const [index, setIndex] = React.useState({});
 
   const storeData = async () => {
     let ss1 = await getData("todo");
@@ -52,7 +45,6 @@ export default function App() {
     storeData();
   },[]);
 
-  console.log(ss)
 
   const add = React.useCallback(() => {
     if (!todo.trim()) {
@@ -66,10 +58,8 @@ export default function App() {
   }, [todo])
 
   const closeModal = () => {
-    // setModalState((modalState)=>!modalState);
+    setModalState((modalState)=>!modalState);
   }
-
-  // removeAllTask("todo");
 
   const state =  {
     modalState,
@@ -77,22 +67,27 @@ export default function App() {
   }
 
 
-  const edit = ({ index }) => {
-    // setIndex(index);
-    // setModalState(modalState => !modalState);
+  const edit = ({ item }) => {
+    setIndex(item);
+    setTodo(item.task);
+    setModalState(modalState => !modalState);
   }
 
-  const update = ({index}) => {
-    // closeModal();
-    // setTodo("");
-    // editTask({ ...argsEdit });
+  const save = () => {
+    closeModal();
+    const uTask = todo;
+    let uItem = ss.map((item) => {
+      if (item.id === index.id) {
+        return { ...index, task: uTask };
+      } else {
+        return item;
+      }
+    });
+    setSs(pre=>uItem);
+    setData("todo", uItem);
+    setTodo("");
   }
 
-  const argsEdit = {
-    key: "todo",
-    value: todo,
-    index
-  }
 
 
   return (
@@ -134,7 +129,7 @@ export default function App() {
             <FlatList
           data={ss}
           renderItem={({ item, index }) => (
-              <TouchableOpacity onLongPress={()=>{edit({index})}}>
+              <TouchableOpacity onLongPress={()=>{edit({item})}}>
                 <Text
                   style={styles.todoText}>{item.task}</Text>
               </TouchableOpacity>
@@ -154,7 +149,7 @@ export default function App() {
               style={{ height: 45, borderWidth: 1, padding: 5, fontSize: 20, paddingLeft: 10, marginBottom:30 }}></TextInput>
             <TouchableOpacity
               style={{ borderWidth: 1, backgroundColor: "black", borderRadius: 10, padding: 8 }}
-              onPress={update}
+              onPress={save}
             >
               <Text style={{ textAlign: "center", fontSize: 20, fontWeight: "700", color: "white" }}>SAVE</Text>
             </TouchableOpacity>
@@ -168,6 +163,12 @@ export default function App() {
         >
         <Text style={{ textAlign: "center", fontSize: 20, fontWeight: "700", color: "white" }}>Empty Storage</Text>
         </TouchableOpacity>
+
+        <View style={{marginVertical:20}}>
+          <Text>
+            * To toggle for task status - onPress.{`\n`}
+            * To edit any task - onLongPress</Text>
+        </View>
 
       </ScrollView>
       <StatusBar style="auto" />

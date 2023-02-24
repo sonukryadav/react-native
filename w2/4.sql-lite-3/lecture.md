@@ -43,6 +43,11 @@ eas login
 ## Configure profile to build apk
 
 ```js
+eas build:configure
+```
+
+
+```js
 // eas.json
 {
   "build": {

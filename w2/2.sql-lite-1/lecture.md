@@ -84,7 +84,7 @@ npm install --save react-native-sqlite-storage
 
 ```js
 import {openDatabase} from 'react-native-sqlite-storage';
-
+// import {openDatabase} from 'expo-sqlite';
 ...
 
 export const db = openDatabase({name: 'mydatabase1.db'},

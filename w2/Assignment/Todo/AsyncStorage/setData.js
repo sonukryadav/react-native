@@ -5,7 +5,7 @@ const setData = async (key, value) => {
         let Key = JSON.stringify(key);
         let Value = JSON.stringify(value);
         await AsyncStorage.setItem(Key, Value);
-        console.log(key, value ,"stored.");
+        // console.log(key, value ,"stored.");
     } catch (err) {
         console.log(err);
         Alert.alert("Error","unable to execute the setData()");

@@ -89,6 +89,20 @@ export default function App() {
   }
 
 
+  const comp = ({item}) => {
+    let uItem = ss.map((i) => {
+      if (i.id === item.id) {
+        return { ...i, completed: !item.completed };
+      } else {
+        return i;
+      }
+    });
+    setSs(pre => uItem);
+    setData("todo", uItem);
+    setTodo("");
+  }
+
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -129,12 +143,15 @@ export default function App() {
             <FlatList
           data={ss}
           renderItem={({ item, index }) => (
-              <TouchableOpacity onLongPress={()=>{edit({item})}}>
+            <TouchableOpacity
+              onLongPress={() => { edit({ item }) }}
+              onPress={() => { comp({item}) }}
+            >
                 <Text
-                  style={styles.todoText}>{item.task}</Text>
+                style={[styles.todoText, !item.completed ? {} : { textDecorationLine: "line-through", backgroundColor:"rgba(11,11,11,0.6)"}]}>{item.task}</Text>
               </TouchableOpacity>
             )}
-          keyExtractor={(item) => item.id.toString()}
+              keyExtractor={(item) => item.id.toString() }
           style={styles.flatList1}
         />
         )}

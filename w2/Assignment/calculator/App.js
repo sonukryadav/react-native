@@ -1,16 +1,44 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function App() {
   const [resultText, setResultText] = useState("");
   const [calculationText, setCalculationText] = useState("");
-  const operations = ['DEL', '+', '-', '*', '/'];
+  const operations = ['+M', '-M', 'DEL', '+', '-', '*', '/', 'Mc'];
+  const [storage, setStorage] = useState([]);
+  const [index, setIndex] = useState(storage.length-1);
+
+  let storage_key = "res";
 
   function calculateResult() {
     const text = resultText;
     setCalculationText(eval(text));
-    setResultText("");
+    // setResultText("");
   }
+
+
+  const ds = async () => {
+    try {
+    let data = await AsyncStorage.getItem(storage_key) || "[]";
+    let data1 = data == [] ? [] : JSON.parse(data);
+    setIndex(data1.length-1);
+    setStorage(data1);
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
+
+
+
+  // console.log(storage);
+  // console.log("index : " + index);
+
+
+  useEffect( () => {
+    ds();
+  }, []);
 
   function validate() {
     const text = resultText;
@@ -26,10 +54,32 @@ export default function App() {
 
   function buttonPressed(text) {
     if (text == '=') {
-      return validate() && calculateResult();
+      if (validate()) {
+        if (resultText == '') {
+          return;
+        }
+        calculateResult();
+        setIndex(storage.length-1);
+        set();
+        return;
+      }
     }
     setResultText(resultText + text);
   }
+
+  async function set() {
+    let st1 = {};
+    st1.cal = resultText;
+    st1.res = eval(resultText);
+    setResultText("");
+    // console.log(st1)
+    setStorage(p => [...p, st1]);
+    // console.log(storage);
+    await AsyncStorage.setItem(storage_key, JSON.stringify([...storage,st1]));
+
+  }
+
+  // console.log(storage);
 
   function operate(operation) {
     switch (operation) {
@@ -46,7 +96,56 @@ export default function App() {
         if (operations.indexOf(lastChar) > 0) return;
         if (resultText == "") return;
         setResultText(resultText + operation);
+        break;
+      case '+M': {
+        if (index == storage.length-1) break;
+        if (index < storage.length) {
+          let obj = storage[index+1];
+          // console.log(obj);
+          setResultText(obj.cal);
+          setCalculationText(obj.res);
+          if (index + 1 != storage.length) {
+            setIndex(i => i + 1);
+            // console.log("+M");
+          }
+        }
+       
+        break;
+      }
+      case '-M': {
+        // console.log("-M");
+        if (index == -1) break;
+        if (index >= 0) {
+          let obj = storage[index];
+          setResultText(obj.cal);
+          setCalculationText(obj.res);
+          console.log(obj);
+          if (index-1 != -1) {
+            setIndex(i => i - 1);
+          }
+        }
+        console.log("-M");
+        break;
+      }
+      case 'Mc': {
+        del();
+        console.log("Mc");
+        break;
+        
+        }
     }
+  }
+  const del = async () => {
+    try {
+      let de = await AsyncStorage.removeItem(storage_key);
+      setStorage([]);
+      setResultText("");
+      setCalculationText("");
+      setIndex(-1);
+    } catch (err) {
+      console.log(err);
+    }
+
   }
 
   let rows = [];

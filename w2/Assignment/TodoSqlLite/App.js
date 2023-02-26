@@ -4,6 +4,25 @@ import { StyleSheet, Text, View, SafeAreaView, ScrollView, TextInput, TouchableO
 import setData from './AsyncStorage/setData';
 import getData from './AsyncStorage/getData';
 import removeAllTask from './AsyncStorage/removeAllTask';
+import * as SQLite from 'expo-sqlite';
+
+// Create a new database or open an existing one using the openDatabase method of the
+// SQLite module.You can use the executeSql method to execute SQL queries on the database:
+const db = SQLite.openDatabase('sonuTodos.db');
+const tbl = 'todoListTable';
+
+
+const generalExecuteSql = (db, query, params = []) => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        query,
+        params,
+        (tx, result) => resolve(result),
+        (e) => reject(e));
+    });
+  });
+}
 
 
 const EditModal = ({ modalState, closeModal, children }) => {
@@ -28,13 +47,25 @@ const EditModal = ({ modalState, closeModal, children }) => {
 }
 
 
-
-
 export default function App() {
   const [todo, setTodo] = React.useState("");
   const [ss, setSs] = React.useState([]);
   const [modalState, setModalState] = React.useState(false);
   const [index, setIndex] = React.useState({});
+
+
+  // create a table for todos
+  // db.transaction((tx) => {
+  //   tx.executeSql(
+  //     'CREATE TABLE IF NOT EXISTS todos (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, completed INT)'
+  //   );
+  // });
+  React.useEffect(() => {
+    generalExecuteSql(db, `CREATE TABLE IF NOT EXISTS ${tbl} (id INTEGER PRIMARY KEY AUTOINCREMENT, task VARCHAR(100), status INTEGER(1))`)
+      .then((t) => console.log("Success :-->", t))
+      .catch((e) => console.log("Failure :-->", e));
+  },[])
+
 
   const storeData = async () => {
     let ss1 = await getData("todo");

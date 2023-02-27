@@ -1,15 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, TextInput, TouchableOpacity, FlatList, Alert,Modal} from 'react-native';
-import setData from './AsyncStorage/setData';
-import getData from './AsyncStorage/getData';
-import removeAllTask from './AsyncStorage/removeAllTask';
+import { StyleSheet, Text, View, SafeAreaView, ScrollView, TextInput, TouchableOpacity, FlatList, Alert, Modal } from 'react-native';
 import * as SQLite from 'expo-sqlite';
+import { Octicons, MaterialCommunityIcons } from 'react-native-vector-icons';
+import Dialog from 'react-native-dialog';
 
-// Create a new database or open an existing one using the openDatabase method of the
-// SQLite module.You can use the executeSql method to execute SQL queries on the database:
 const db = SQLite.openDatabase('sonuTodos.db');
-const tbl = 'todoListTable';
+const tbl = 'todoListTable1';
 
 
 const generalExecuteSql = (db, query, params = []) => {
@@ -52,41 +49,55 @@ export default function App() {
   const [ss, setSs] = React.useState([]);
   const [modalState, setModalState] = React.useState(false);
   const [index, setIndex] = React.useState({});
+  const [dialogVisible, setDialogVisible] = React.useState(false);
+  const [inputValue, setInputValue] = React.useState('');
 
 
-  // create a table for todos
-  // db.transaction((tx) => {
-  //   tx.executeSql(
-  //     'CREATE TABLE IF NOT EXISTS todos (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, completed INT)'
-  //   );
-  // });
+
   React.useEffect(() => {
-    generalExecuteSql(db, `CREATE TABLE IF NOT EXISTS ${tbl} (id INTEGER PRIMARY KEY AUTOINCREMENT, task VARCHAR(100), status INTEGER(1))`)
-      .then((t) => console.log("Success :-->", t))
+    generalExecuteSql(db, `CREATE TABLE IF NOT EXISTS ${tbl} (id INTEGER PRIMARY KEY AUTOINCREMENT, task VARCHAR(100), completed BOOLEAN)`)
+      .then((result) => console.log("Success :-->", result) )
       .catch((e) => console.log("Failure :-->", e));
   },[])
 
-
-  const storeData = async () => {
-    let ss1 = await getData("todo");
-    setSs(p=>ss1);
-  }
-
   React.useEffect(() => {
-    storeData();
+    generalExecuteSql(db, `SELECT * FROM ${tbl}`)
+      .then((data) => {
+        console.log("Table data :----> ", data?.rows?._array);
+        setSs(data?.rows?._array);
+      })
+      .catch((err) => console.log("Failed in retrieving table data", data));
   },[]);
 
 
   const add = React.useCallback(() => {
     if (!todo.trim()) {
-      Alert.alert('Error', 'Please enter a todo');
+      Alert.alert('Hey', '📝 Please enter your task.');
       return;
     }
-    let updatedArray = [...ss, {id: Date.now(), task:todo.trim(), completed:false}]
+    let updatedArray = [...ss, { id: ss.length+1, task: todo.trim(), completed: false }]
     setTodo('');
     setSs(updatedArray);
-    setData("todo", updatedArray);
-  }, [todo])
+    addTaskSql();
+  }, [todo]);
+
+
+  const addTaskSql = () => {
+    let todoT = todo.trim();
+    generalExecuteSql(db, `INSERT INTO ${tbl} (task, completed) VALUES (?, ?)`, [todoT , 0])
+      .then((tx) => {
+        console.log("Successfully inserted data to table :---->", tx);
+
+        generalExecuteSql(db, `SELECT * FROM ${tbl}`)
+          .then((data) => {
+            console.log("Table data :----> ", data?.rows?._array);
+          })
+          .catch((err) => console.log("Failed in retrieving table data", data));
+      })
+      .catch((err) => console.log("Failure while inserting data to table :--->", err));
+  }
+
+
 
   const closeModal = () => {
     setModalState((modalState)=>!modalState);
@@ -115,13 +126,17 @@ export default function App() {
       }
     });
     setSs(pre=>uItem);
-    setData("todo", uItem);
+    generalExecuteSql(db, `UPDATE ${tbl} SET task=? WHERE id=?;`, [uTask, index.id])
+      .then(() => console.log("Updated the task."))
+    .catch((err)=>console.log("Failed in update ", err))
     setTodo("");
   }
 
 
+
   const comp = ({item}) => {
-    let uItem = ss.map((i) => {
+    let uItem = ss
+    ?.map((i) => {
       if (i.id === item.id) {
         return { ...i, completed: !item.completed };
       } else {
@@ -129,8 +144,27 @@ export default function App() {
       }
     });
     setSs(pre => uItem);
-    setData("todo", uItem);
+    generalExecuteSql(db, `UPDATE ${tbl} SET completed = ? WHERE id = ?`, [!item.completed, item.id])
+      .then((data) => {
+        console.log("status Updated");
+      })
+      .catch((err) => console.log("Failed in updating table data :---> ", data));
     setTodo("");
+  }
+
+
+  const dropTable = () => {
+    generalExecuteSql(db, `DROP TABLE IF EXISTS ${tbl};`, [])
+      .then((result) => {
+        console.log("Table dropped successfully.");
+        setSs([]);
+        setTodo('');
+      })
+    .catch((err) => console.log("Failed to drop table", err));
+  }
+
+  const singleDelete = () => {
+    setDialogVisible((prev) => true);
   }
 
 
@@ -143,17 +177,21 @@ export default function App() {
         padding: 30
       }}>
 
-        <View>
-          <Text style={{color:"black", fontSize:25, fontWeight:"800", textAlign:"center"}}>TODO APP</Text>
+        <View style={{flex:1, flexDirection:"row", justifyContent:"center", alignItems:"center", }}>
+          <Octicons name="tasklist" size={30} color="green" />
+          <Text style={{ color: "black", fontSize: 25, fontWeight: "800", marginLeft:10}}>
+            TODO APP
+          </Text>
         </View>
 
         <View style={{ flex: 1, marginVertical: 35}}>
           <TextInput
             placeholderTextColor="black"
-            placeholder='Type...'
+            placeholder='Type...🖊️ '
             value={todo}
             onChangeText={(val)=>setTodo(val)}
-            style={{ flex: 1, height: 45, borderWidth: 1, padding: 5, fontSize: 20, paddingLeft: 10 }} />
+            style={{ flex: 1, height: 45, borderWidth: 1, padding: 5, fontSize: 20, paddingLeft: 10 }} >
+            </TextInput>
         </View>
 
         <TouchableOpacity
@@ -163,10 +201,10 @@ export default function App() {
           <Text style={{ textAlign:"center", fontSize:20,  fontWeight:"700", color:"white"}}>ADD</Text>
         </TouchableOpacity>
 
-        
+
 
         {ss.length == 0 ? (
-          <TouchableOpacity onPress={() => { Alert.alert("Hey,", "No item in the task box.") }}>
+          <TouchableOpacity onPress={() => { Alert.alert("Hey,", "🗑️ No task in the task box.") }}>
           <Text
               style={{ ...styles.todoText, marginVertical: 30 }}>No task added</Text>
         </TouchableOpacity>
@@ -174,13 +212,18 @@ export default function App() {
             <FlatList
           data={ss}
           renderItem={({ item, index }) => (
-            <TouchableOpacity
+            <View style={{flex:1, flexDirection:"row", justifyContent:"center", alignItems:"center"}}>
+              <TouchableOpacity style={{flex:1}}
               onLongPress={() => { edit({ item }) }}
               onPress={() => { comp({item}) }}
             >
                 <Text
                 style={[styles.todoText, !item.completed ? {} : { textDecorationLine: "line-through", backgroundColor:"rgba(11,11,11,0.6)"}]}>{item.task}</Text>
               </TouchableOpacity>
+              <TouchableOpacity onPress={()=>singleDelete()}>
+                <MaterialCommunityIcons name="delete" size={40} color="red" />
+              </TouchableOpacity>
+              </View>
             )}
               keyExtractor={(item) => item.id.toString() }
           style={styles.flatList1}
@@ -204,12 +247,22 @@ export default function App() {
           </View>
         </EditModal>
 
+
+        <Dialog.Container visible={dialogVisible}>
+          <Dialog.Title>Enter a value</Dialog.Title>
+          <Dialog.Button label="Cancel" onPress={() => setDialogVisible((p) => !p)} />
+          <Dialog.Button label="Ok" onPress={()=>setDialogVisible((p)=>!p)} />
+        </Dialog.Container>
+
         <TouchableOpacity
-          style={{ borderWidth: 1, backgroundColor: "black", borderRadius: 10, padding: 8 }}
-          onPress={() => { removeAllTask("todo"); storeData(); }}
+          style={{ borderWidth: 1, backgroundColor: "black", borderRadius: 10 }}
+          onPress={() => { dropTable(); }}
           disabled={ss.length == 0}
         >
-        <Text style={{ textAlign: "center", fontSize: 20, fontWeight: "700", color: "white" }}>Empty Storage</Text>
+          <View style={{flex:1, flexDirection:"row", justifyContent:"center", alignItems:"center", padding:8}}>
+            <MaterialCommunityIcons name="delete-circle" size={32} color="white" />
+            <Text style={{fontSize: 20,textAlign: "center",  fontWeight: "700", color: "white", marginLeft:7}}>Delete all tasks</Text>
+          </View>
         </TouchableOpacity>
 
         <View style={{marginVertical:20}}>

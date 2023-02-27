@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, TextInput, TouchableOpacity, FlatList, Alert, Modal } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, ScrollView, TextInput, TouchableOpacity, FlatList, Alert, Modal, Vibration } from 'react-native';
 import * as SQLite from 'expo-sqlite';
 import { Octicons, MaterialCommunityIcons } from 'react-native-vector-icons';
 import Dialog from 'react-native-dialog';
@@ -23,7 +23,6 @@ const generalExecuteSql = (db, query, params = []) => {
 
 
 const EditModal = ({ modalState, closeModal, children }) => {
-
   return (
     <>
       <SafeAreaView>
@@ -33,7 +32,7 @@ const EditModal = ({ modalState, closeModal, children }) => {
           visible={modalState}
           onRequestClose={closeModal}
         >
-          <View style={{flex:1, borderWidth: 2, borderColor: "black", backgroundColor:"rgba(100,200,200,0.9)", paddingVertical:30, padding:30}}>
+          <View style={{flex:1, borderWidth: 2, borderColor: "black", backgroundColor:"rgba(0,0,0,0.9)",  paddingHorizontal:30, justifyContent:"center"}}>
             <Text style={{textAlign:"center", fontSize:30, fontWeight:"800"}}>Edit your task</Text>
             { children}
           </View>
@@ -44,13 +43,33 @@ const EditModal = ({ modalState, closeModal, children }) => {
 }
 
 
+const DialogCompo = ({status3, title3, noLabel, noFun, ysLabel, ysFun}) => {
+  return (
+    <>
+      <Dialog.Container visible={status3}>
+        <Dialog.Title>{title3}</Dialog.Title>
+        <Dialog.Button label={noLabel} onPress={noFun} />
+        <Dialog.Button label={ysLabel} onPress={ysFun} />
+      </Dialog.Container>
+    </>
+  );
+}
+
+
 export default function App() {
   const [todo, setTodo] = React.useState("");
   const [ss, setSs] = React.useState([]);
   const [modalState, setModalState] = React.useState(false);
   const [index, setIndex] = React.useState({});
-  const [dialogVisible, setDialogVisible] = React.useState(false);
-  const [inputValue, setInputValue] = React.useState('');
+  const [dialogVisible, setDialogVisible] = React.useState({
+    show: false,
+    delete1: false
+  });
+  const [toDelete, setToDelete] = React.useState({});
+  const [deleteTable, setDeleteTable] = React.useState({
+    show: false,
+    delete1: false
+  });
 
 
 
@@ -71,6 +90,7 @@ export default function App() {
 
 
   const add = React.useCallback(() => {
+    Vibration.vibrate(100)
     if (!todo.trim()) {
       Alert.alert('Hey', '📝 Please enter your task.');
       return;
@@ -100,7 +120,8 @@ export default function App() {
 
 
   const closeModal = () => {
-    setModalState((modalState)=>!modalState);
+    setModalState((modalState) => !modalState);
+    setTodo("");
   }
 
   const state =  {
@@ -116,6 +137,7 @@ export default function App() {
   }
 
   const save = () => {
+    Vibration.vibrate(100)
     closeModal();
     const uTask = todo;
     let uItem = ss.map((item) => {
@@ -134,7 +156,8 @@ export default function App() {
 
 
 
-  const comp = ({item}) => {
+  const comp = ({ item }) => {
+    Vibration.vibrate(150);
     let uItem = ss
     ?.map((i) => {
       if (i.id === item.id) {
@@ -153,20 +176,52 @@ export default function App() {
   }
 
 
-  const dropTable = () => {
+  const deleteCancel = () => {
+    setDeleteTable({ delete1: false, show: false });
+  }
+
+  const deleteOkay = () => {
     generalExecuteSql(db, `DROP TABLE IF EXISTS ${tbl};`, [])
       .then((result) => {
         console.log("Table dropped successfully.");
         setSs([]);
         setTodo('');
       })
-    .catch((err) => console.log("Failed to drop table", err));
+      .catch((err) => console.log("Failed to drop table", err));
+    setDeleteTable({ delete1: false, show: false });
   }
 
-  const singleDelete = () => {
-    setDialogVisible((prev) => true);
+
+  const dropTable = () => {
+    Vibration.vibrate(500)
+    setDeleteTable((prev) => ({ ...prev, show: true }));
   }
 
+  const singleDelete = ({ item }) => {
+    Vibration.vibrate(200)
+    setToDelete((p)=>item);
+    setDialogVisible((prev) => ({ ...prev, show: true }));
+  }
+
+  const cancel = () => {
+    setDialogVisible({ delete1: false, show: false });
+    setToDelete((p)=>{});
+  }
+
+  const okay = () => {
+    setDialogVisible({ delete1: true, show: false });
+    let ar = ss.filter((it, ind) => it.id !== toDelete.id);
+    updateDb(toDelete);
+    setSs((p) => ar);
+    setToDelete((p) => { });
+    setDialogVisible({ delete1: false, show: false });
+  }
+
+  const updateDb = async(del) => {
+    generalExecuteSql(db, `DELETE FROM ${tbl} WHERE id=?;`, [`${del.id}`])
+      .then(() => console.log(`Row ${del.id} deleted successfully.`))
+      .catch((err) => console.log(`Row ${del.id} deletion failed.`))
+  }
 
 
   return (
@@ -178,10 +233,11 @@ export default function App() {
       }}>
 
         <View style={{flex:1, flexDirection:"row", justifyContent:"center", alignItems:"center", }}>
-          <Octicons name="tasklist" size={30} color="green" />
-          <Text style={{ color: "black", fontSize: 25, fontWeight: "800", marginLeft:10}}>
+          <Octicons name="tasklist" size={35} color="green" style={{ marginRight: 10 }} />
+          <Text style={styles.topHeading}>
             TODO APP
           </Text>
+          <Octicons name="tasklist" size={35} color="green" style={{marginLeft:10}} />
         </View>
 
         <View style={{ flex: 1, marginVertical: 35}}>
@@ -195,10 +251,13 @@ export default function App() {
         </View>
 
         <TouchableOpacity
-          style={{ borderWidth: 1, backgroundColor: "black", borderRadius: 10, padding: 8 }}
+          style={{ borderWidth: 1, backgroundColor: "black", borderRadius: 10 }}
           onPress={add}
         >
-          <Text style={{ textAlign:"center", fontSize:20,  fontWeight:"700", color:"white"}}>ADD</Text>
+          <View style={styles.addAndDeleteAllButtonView}>
+            <Octicons name="diff-added" size={25} color="white" />
+            <Text style={{ textAlign: "center", fontSize: 20, fontWeight: "700", color: "white", marginLeft: 7 }}>ADD</Text>
+          </View>
         </TouchableOpacity>
 
 
@@ -218,9 +277,9 @@ export default function App() {
               onPress={() => { comp({item}) }}
             >
                 <Text
-                style={[styles.todoText, !item.completed ? {} : { textDecorationLine: "line-through", backgroundColor:"rgba(11,11,11,0.6)"}]}>{item.task}</Text>
+                style={[styles.todoText, !item.completed ? {} : { textDecorationLine: "line-through", backgroundColor:"rgba(11,11,11,0.5)", borderColor:"red"}]}>{item.task}</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={()=>singleDelete()}>
+              <TouchableOpacity onPress={()=>singleDelete({item})}>
                 <MaterialCommunityIcons name="delete" size={40} color="red" />
               </TouchableOpacity>
               </View>
@@ -231,13 +290,13 @@ export default function App() {
         )}
 
         <EditModal {...state} >
-          <View style={{ borderWidth: 1, marginTop: 100, padding:30, backgroundColor:"white" }}>
+          <View style={{ borderWidth: 1, padding:30, backgroundColor:"white" }}>
             <TextInput
               placeholderTextColor="black"
               placeholder='Type...'
               value={todo}
               onChangeText={(val) => setTodo(val)}
-              style={{ height: 45, borderWidth: 1, padding: 5, fontSize: 20, paddingLeft: 10, marginBottom:30 }}></TextInput>
+              style={{ height: 70, borderWidth: 1, padding: 4, fontSize: 20, paddingLeft: 10, marginBottom:30, borderRadius:10 }}></TextInput>
             <TouchableOpacity
               style={{ borderWidth: 1, backgroundColor: "black", borderRadius: 10, padding: 8 }}
               onPress={save}
@@ -247,23 +306,32 @@ export default function App() {
           </View>
         </EditModal>
 
-
-        <Dialog.Container visible={dialogVisible}>
-          <Dialog.Title>Enter a value</Dialog.Title>
-          <Dialog.Button label="Cancel" onPress={() => setDialogVisible((p) => !p)} />
-          <Dialog.Button label="Ok" onPress={()=>setDialogVisible((p)=>!p)} />
-        </Dialog.Container>
+        <DialogCompo
+        status3={dialogVisible.show}
+        title3={"Do you want to delete?"}
+        noLabel={"No"}
+        noFun={cancel}
+        ysLabel={"Yes"}
+        ysFun={okay}  />
 
         <TouchableOpacity
           style={{ borderWidth: 1, backgroundColor: "black", borderRadius: 10 }}
           onPress={() => { dropTable(); }}
           disabled={ss.length == 0}
         >
-          <View style={{flex:1, flexDirection:"row", justifyContent:"center", alignItems:"center", padding:8}}>
+          <View style={styles.addAndDeleteAllButtonView}>
             <MaterialCommunityIcons name="delete-circle" size={32} color="white" />
             <Text style={{fontSize: 20,textAlign: "center",  fontWeight: "700", color: "white", marginLeft:7}}>Delete all tasks</Text>
           </View>
         </TouchableOpacity>
+
+        <DialogCompo
+          status3={deleteTable.show}
+          title3={"Do you want to delete all the task?"}
+          noLabel={"No"}
+          noFun={deleteCancel}
+          ysLabel={"Yes"}
+          ysFun={deleteOkay} />
 
         <View style={{marginVertical:20}}>
           <Text>
@@ -284,16 +352,34 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     // padding:30
   },
+  topHeading: {
+    color: "black",
+    fontSize: 30,
+    fontWeight: "800",
+    textShadowOffset: { width: 2, height: 5 },
+    textShadowRadius: 5,
+    textShadowColor: '#000000'
+  },
   todoText: {
-    borderWidth: 1,
+    borderWidth: 0.5,
     padding: 5,
     marginVertical: 5,
     textAlign: "center",
-    fontWeight: "700",
-    fontSize: 15,
+    fontWeight: "800",
+    fontSize: 17,
+    borderRadius: 10,
+    backgroundColor:"rgba(101,255,255,0.3)"
   },
   flatList1: {
     marginVertical: 30,
-    maxHeight: 300
+    maxHeight: 420
+  },
+  addAndDeleteAllButtonView:{
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 8,
   }
+
 });

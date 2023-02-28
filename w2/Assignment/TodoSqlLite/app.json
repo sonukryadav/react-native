@@ -15,6 +15,11 @@
   "expo": {
     "android": {
       "package": "com.sonukr1256.todobysonukr"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "699226e5-88f6-4070-a78e-7670f50d32c4"
+      }
     }
   }
 }

@@ -1,33 +1,20 @@
 {
+  "android": {
+    "package": "Sonu's Todo",
+    "versionCode": "1.0.0",
+    "adaptiveIcon": {
+      "foregroundImage": "./assets/splash.png",
+      "backgroundColor": "teal"
+    }
+  },
+  "extra": {
+    "eas": {
+      "projectId": "699226e5-88f6-4070-a78e-7670f50d32c4"
+    }
+  },
   "expo": {
-    "name": "Todo",
-    "slug": "Todo",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
+      "package": "com.sonukr1256.todobysonukr"
     }
   }
 }

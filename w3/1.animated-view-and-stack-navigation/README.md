@@ -15,4 +15,9 @@
 # Coding:
 
 1. Live:
+- Make Circle to Sqlare and vice versa using animated view
+- Create a 4 page application using Stack Navigation
+
 2. Assignment:
+- Create an e commerce app having login screen and home screen. Use animated view to display Navigation drawer.
+

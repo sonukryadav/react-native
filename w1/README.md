@@ -14,7 +14,6 @@
   - FlatList
   - NestedList
 - Native Styling
-
 ### Coding
 
 1. Counter App

@@ -1,9 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, TextInput, TouchableOpacity, FlatList, Alert, Modal, Vibration } from 'react-native';
+import { RefreshControl,Linking, Image,StyleSheet, Text, View, SafeAreaView, ScrollView, TextInput, TouchableOpacity, FlatList, Alert, Modal, Vibration } from 'react-native';
 import * as SQLite from 'expo-sqlite';
 import { Octicons, MaterialCommunityIcons } from 'react-native-vector-icons';
 import Dialog from 'react-native-dialog';
+import sonu1 from './assets/sonu1.png';
 
 const db = SQLite.openDatabase('sonuTodos.db');
 const tbl = 'todoListTable1';
@@ -47,7 +48,7 @@ const DialogCompo = ({status3, title3, noLabel, noFun, ysLabel, ysFun}) => {
   return (
     <>
       <Dialog.Container visible={status3}>
-        <Dialog.Title>{title3}</Dialog.Title>
+        <Dialog.Title><Text style={{color:"black"}}>{title3}</Text></Dialog.Title>
         <Dialog.Button label={noLabel} onPress={noFun} />
         <Dialog.Button label={ysLabel} onPress={ysFun} />
       </Dialog.Container>
@@ -70,14 +71,15 @@ export default function App() {
     show: false,
     delete1: false
   });
+  const [refreshing, setRefreshing] = React.useState(false);
 
 
 
   React.useEffect(() => {
     generalExecuteSql(db, `CREATE TABLE IF NOT EXISTS ${tbl} (id INTEGER PRIMARY KEY AUTOINCREMENT, task VARCHAR(100), completed BOOLEAN)`)
-      .then((result) => console.log("Success :-->", result) )
+      .then((result) => console.log("Success :-->", result))
       .catch((e) => console.log("Failure :-->", e));
-  },[])
+  }, [])
 
   React.useEffect(() => {
     generalExecuteSql(db, `SELECT * FROM ${tbl}`)
@@ -86,7 +88,7 @@ export default function App() {
         setSs(data?.rows?._array);
       })
       .catch((err) => console.log("Failed in retrieving table data", data));
-  },[]);
+  }, []);
 
 
   const add = React.useCallback(() => {
@@ -95,7 +97,7 @@ export default function App() {
       Alert.alert('Hey', '📝 Please enter your task.');
       return;
     }
-    let updatedArray = [...ss, { id: ss.length+1, task: todo.trim(), completed: false }]
+    let updatedArray = [...ss, { id: ss.length + 1, task: todo.trim(), completed: false }]
     setTodo('');
     setSs(updatedArray);
     addTaskSql();
@@ -104,7 +106,7 @@ export default function App() {
 
   const addTaskSql = () => {
     let todoT = todo.trim();
-    generalExecuteSql(db, `INSERT INTO ${tbl} (task, completed) VALUES (?, ?)`, [todoT , 0])
+    generalExecuteSql(db, `INSERT INTO ${tbl} (task, completed) VALUES (?, ?)`, [todoT, 0])
       .then((tx) => {
         console.log("Successfully inserted data to table :---->", tx);
 
@@ -124,7 +126,7 @@ export default function App() {
     setTodo("");
   }
 
-  const state =  {
+  const state = {
     modalState,
     closeModal
   }
@@ -147,10 +149,10 @@ export default function App() {
         return item;
       }
     });
-    setSs(pre=>uItem);
+    setSs(pre => uItem);
     generalExecuteSql(db, `UPDATE ${tbl} SET task=? WHERE id=?;`, [uTask, index.id])
       .then(() => console.log("Updated the task."))
-    .catch((err)=>console.log("Failed in update ", err))
+      .catch((err) => console.log("Failed in update ", err))
     setTodo("");
   }
 
@@ -159,13 +161,13 @@ export default function App() {
   const comp = ({ item }) => {
     Vibration.vibrate(150);
     let uItem = ss
-    ?.map((i) => {
-      if (i.id === item.id) {
-        return { ...i, completed: !item.completed };
-      } else {
-        return i;
-      }
-    });
+      ?.map((i) => {
+        if (i.id === item.id) {
+          return { ...i, completed: !item.completed };
+        } else {
+          return i;
+        }
+      });
     setSs(pre => uItem);
     generalExecuteSql(db, `UPDATE ${tbl} SET completed = ? WHERE id = ?`, [!item.completed, item.id])
       .then((data) => {
@@ -199,13 +201,13 @@ export default function App() {
 
   const singleDelete = ({ item }) => {
     Vibration.vibrate(200)
-    setToDelete((p)=>item);
+    setToDelete((p) => item);
     setDialogVisible((prev) => ({ ...prev, show: true }));
   }
 
   const cancel = () => {
     setDialogVisible({ delete1: false, show: false });
-    setToDelete((p)=>{});
+    setToDelete((p) => { });
   }
 
   const okay = () => {
@@ -215,21 +217,55 @@ export default function App() {
     setSs((p) => ar);
     setToDelete((p) => { });
     setDialogVisible({ delete1: false, show: false });
+    console.log("f");
   }
 
-  const updateDb = async(del) => {
+  const updateDb = async (del) => {
     generalExecuteSql(db, `DELETE FROM ${tbl} WHERE id=?;`, [`${del.id}`])
       .then(() => console.log(`Row ${del.id} deleted successfully.`))
       .catch((err) => console.log(`Row ${del.id} deletion failed.`))
   }
 
 
+  const sonuTouch =React.useCallback(async() => {
+    let url = `https://sonukr.in/`;
+    let supported = await Linking.canOpenURL(url);
+    if (supported) {
+      await Linking.openURL(url);
+    }
+    else {
+      Alert.alert("Hey,", "It seems that there is some issue with server. \n Please try again later.")
+    }
+
+  },[])
+
+  const onRefresh = React.useCallback(async () => {
+    Vibration.vibrate(150);
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
+  },[]);
+
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
         nestedScrollEnabled={true}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            title="sonu"
+            // size={"30"}
+            colors={["green", "red", "black"]}
+            progressBackgroundColor={"white"}
+            progressViewOffset={50}
+          />
+        }
         style={{
-        padding: 30
+          padding: 30,
+          flex:1,
       }}>
 
         <View style={{flex:1, flexDirection:"row", justifyContent:"center", alignItems:"center", }}>
@@ -246,7 +282,7 @@ export default function App() {
             placeholder='Type...🖊️ '
             value={todo}
             onChangeText={(val)=>setTodo(val)}
-            style={{ flex: 1, height: 45, borderWidth: 1, padding: 5, fontSize: 20, paddingLeft: 10 }} >
+            style={{ flex: 1, height: 45, borderWidth: 1, padding: 5, fontSize: 20, paddingLeft: 10, borderRadius:5 }} >
             </TextInput>
         </View>
 
@@ -271,7 +307,7 @@ export default function App() {
             <FlatList
           data={ss}
           renderItem={({ item, index }) => (
-            <View style={{flex:1, flexDirection:"row", justifyContent:"center", alignItems:"center"}}>
+            <View style={styles.flatListView1}>
               <TouchableOpacity style={{flex:1}}
               onLongPress={() => { edit({ item }) }}
               onPress={() => { comp({item}) }}
@@ -284,7 +320,8 @@ export default function App() {
               </TouchableOpacity>
               </View>
             )}
-              keyExtractor={(item) => item.id.toString() }
+              keyExtractor={(item) => item.id.toString()}
+              nestedScrollEnabled={true}
           style={styles.flatList1}
         />
         )}
@@ -333,13 +370,22 @@ export default function App() {
           ysLabel={"Yes"}
           ysFun={deleteOkay} />
 
-        <View style={{marginVertical:20}}>
+        <View style={{marginVertical:35}}>
           <Text>
             * To toggle for task status - onPress.{`\n`}
             * To edit any task - onLongPress</Text>
         </View>
 
       </ScrollView>
+
+        <View style={{flex:0, padding:5}}>
+        <TouchableOpacity onPress={sonuTouch}>
+          <Image source={sonu1} style={{ width: 50, height: 50, borderRadius: 50, alignSelf:"center" }} />
+          <Text style={{ fontWeight: "600", textAlign: "center", fontSize:10 }}>Sonu kr.</Text>
+          <Text style={{textAlign:"center", fontSize:8}}>React Native Developer</Text>
+        </TouchableOpacity>
+        </View>
+
       <StatusBar style="auto" />
     </SafeAreaView>
   );
@@ -358,7 +404,7 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     textShadowOffset: { width: 2, height: 5 },
     textShadowRadius: 5,
-    textShadowColor: '#000000'
+    textShadowColor: 'grey'
   },
   todoText: {
     borderWidth: 0.5,
@@ -368,11 +414,11 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     fontSize: 17,
     borderRadius: 10,
-    backgroundColor:"rgba(101,255,255,0.3)"
+    backgroundColor:"rgba(101,255,255,0.3)",
   },
   flatList1: {
     marginVertical: 30,
-    maxHeight: 420
+    maxHeight:331,
   },
   addAndDeleteAllButtonView:{
     flex: 1,
@@ -380,6 +426,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 8,
+  },
+  flatListView1: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   }
 
 });

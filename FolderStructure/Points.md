@@ -20,10 +20,11 @@
 
 
 ### Expo to BareReactNative App
-- First created in expo then can be converted to :
+- First created an expo then can be converted to :
 
-- "android": "expo start --android",
-- "ios": "expo start --ios",
-- "web": "expo start --web"
+- "android": "expo run:android",
+-  To run : expo run:android
 
-- "start": "expo start",
+
+- "ios": "expo run:ios",
+-  To run : expo run:ios

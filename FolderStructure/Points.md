@@ -19,4 +19,11 @@
 - npx react-native run-android
 
 
-### Expo to 
+### Expo to BareReactNative App
+- First created in expo then can be converted to :
+
+- "android": "expo start --android",
+- "ios": "expo start --ios",
+- "web": "expo start --web"
+
+- "start": "expo start",

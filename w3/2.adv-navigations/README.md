@@ -14,4 +14,5 @@
 - 4 Page App with drawer navigator
 
 2. Assignment:
+- Create Linkedin notification page and nagivation drawer.
 

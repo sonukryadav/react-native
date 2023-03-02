@@ -1,2 +1,8 @@
+## Create a TODO App using Mobx or Redux Toolkit. 
+# Features
+ - Add Todo
+ - Update Todo
+ - Delete Todo
 
-Create a TODO App using Mobx. For APIs see https://dummyjson.com/docs/todos.
+# Hints
+Look at this: https://dummyjson.com/docs/todos regarding API calls of Add, Update and Delete

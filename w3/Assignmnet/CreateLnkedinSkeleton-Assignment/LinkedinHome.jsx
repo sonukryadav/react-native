@@ -147,30 +147,39 @@ const Post = ({ item }) => {
 
 }
 
-export default function App() {
 
+const Head = ({ navigation }) => {
     const chat = () => {
         Alert.alert("Chat section under development.")
     }
+    return (
+        <>
+            <View style={styles.view1}>
+                <TouchableOpacity onPress={() => navigation.openDrawer()}>
+                    <Image style={styles.image1} source={sonu1} />
+                </TouchableOpacity>
+                <TextInput style={styles.input1}
+                    placeholder={" 🔍   Search"}
+                    placeholderTextColor={"white"}
+                />
+                <Ionicons onPress={chat} name={"chatbubble-ellipses-sharp"} size={25} color={"grey"} />
+            </View>
+        </>
+    );
+}
+
+export default function LinkedinHome({navigation}) {
 
     { /* */ }
     return (
-        <SafeAreaView style={styles.container}>
-            <ScrollView style={styles.view0}>
-                <View style={styles.view1}>
-                    <Image style={styles.image1} source={sonu1} />
-                    <TextInput style={styles.input1}
-                        placeholder={" 🔍   Search"}
-                        placeholderTextColor={"white"}
-                    />
-                    <Ionicons onPress={chat} name={"chatbubble-ellipses-sharp"} size={25} color={"grey"} />
-                </View>
+        <SafeAreaView style={[styles.container, styles.view0]}>
+            <ScrollView>
+                <Head navigation={navigation} />
                 <FlatList
                     data={post}
                     renderItem={({ item }) => (<Post item={item} />)}
                     keyExtractor={item => (item.id).toString()}
                 />
-
             </ScrollView>
         </SafeAreaView>
     );
@@ -272,3 +281,6 @@ const styles = StyleSheet.create({
 
     }
 });
+
+
+export { Head };

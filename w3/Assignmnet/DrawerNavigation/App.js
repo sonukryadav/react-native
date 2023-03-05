@@ -65,7 +65,7 @@ const MyDrawer = () => {
         />}
       >
       <Drawer.Screen name="Home" component={HomeScreen} />
-        <Drawer.Screen name="Notifications" component={NotificationsScreen} />
+      <Drawer.Screen name="Notifications" component={NotificationsScreen} />
     </Drawer.Navigator>
   </>);
 }

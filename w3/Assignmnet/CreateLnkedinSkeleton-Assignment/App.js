@@ -86,11 +86,11 @@ const MyTab = () => {
       })
       }
     >
-      <Tab.Screen name="Home" component={MyDrawer} />
-      <Tab.Screen name="My Network" component={MyDrawer } />
+      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="My Network" component={MyNetwork} />
       <Tab.Screen name="Post" component={Post} />
-      <Tab.Screen name="Notifications" component={ MyDrawer } />
-        <Tab.Screen name="Jobs" component={MyDrawer} />
+      <Tab.Screen name="Notifications" component={ Notification} />
+        <Tab.Screen name="Jobs" component={Jobs} />
     </Tab.Navigator>
   );
 }
@@ -107,7 +107,7 @@ function CustomDrawerContent(props) {
             <Text style={{fontSize:18, fontWeight:"800"}}>Sonu Kumar Yadav</Text>
           </View>
         )}
-        onPress={()=>navigation.navigate("Home")}
+        // onPress={()=>navigation.navigate("Home")}
       />
       <DrawerItemList {...props} />
       <DrawerItem
@@ -128,11 +128,7 @@ const MyDrawer = () => {
       defaultStatus={"closed"}
       drawerContent={(props) => (<CustomDrawerContent {...props} />)}
     >
-      <Drawer.Screen name="Home" component={Home} options={{ headerShown: false }} />
-      <Drawer.Screen name="My Network" component={MyNetwork} options={{ headerShown: false }} />
-      <Drawer.Screen name="Post" component={Post} options={{ headerShown: false }} />
-      <Drawer.Screen name="Notifications" component={Notification} options={{ headerShown: false }} />
-      <Drawer.Screen name="Jobs" component={Jobs} options={{ headerShown: false }} />
+      {/* <Drawer.Screen name="Home" component={Home} options={{ headerShown: false }} /> */}
     </Drawer.Navigator>
   );
 }

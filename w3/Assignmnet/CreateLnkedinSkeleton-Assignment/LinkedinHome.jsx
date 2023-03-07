@@ -173,14 +173,14 @@ export default function LinkedinHome({navigation}) {
     { /* */ }
     return (
         <SafeAreaView style={[styles.container, styles.view0]}>
-            <ScrollView>
+            {/* <ScrollView> */}
                 <Head navigation={navigation} />
                 <FlatList
                     data={post}
                     renderItem={({ item }) => (<Post item={item} />)}
                     keyExtractor={item => (item.id).toString()}
                 />
-            </ScrollView>
+            {/* </ScrollView> */}
         </SafeAreaView>
     );
 }

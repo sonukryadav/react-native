@@ -7,6 +7,8 @@ import LinkedinHome from './LinkedinHome';
 import { Head } from './LinkedinHome';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem, } from '@react-navigation/drawer';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import MyStack from "./Notification";
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -86,34 +88,78 @@ const MyTab = () => {
       })
       }
     >
-      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Home" component={MyDrawer} />
       <Tab.Screen name="My Network" component={MyNetwork} />
       <Tab.Screen name="Post" component={Post} />
-      <Tab.Screen name="Notifications" component={ Notification} />
-        <Tab.Screen name="Jobs" component={Jobs} />
+      <Tab.Screen name="Notifications" component={ MyStack} />
+      <Tab.Screen name="Jobs" component={Jobs} />
     </Tab.Navigator>
+  );
+}
+
+const Group = () => {
+  return (
+    <>
+    </>
+  );
+}
+
+const Events = () => {
+  return (
+    <>
+    </>
   );
 }
 
 // -----------------------------Drawer---------------------
 
-function CustomDrawerContent(props) {
+function CustomDrawerContent({ ...props}) {
   return (
-    <DrawerContentScrollView {...props}>
+    <DrawerContentScrollView {...props} contentContainerStyle={{ flex: 1, justifyContent: 'flex-end' }}>
+      <View style={{flex:1}}>
+          <DrawerItem
+                  label={() => (
+                    <View>
+                      <Image source={{ uri: `https://sonukr.in/assests/sonu-tree-bg-blur-color.png` }} style={{ height: 60, width: 60, borderRadius: 30 }} />
+                      <Text style={{ fontSize: 18, fontWeight: "800"}}>Sonu Kumar Yadav</Text>
+                      <Text style={{marginTop:7}}>View profile</Text>
+                      <Text style={{ fontSize: 15, marginTop: 22 }}><Text style={{ fontWeight: 700 }}>120</Text> profile views</Text>
+                    </View>
+                  )}
+                  onPress={()=>navigation.navigate("Home")}
+        />
+        <View style={{ borderBottomWidth: 0.5, borderColor: "gray", marginBottom:30 }}></View>
+
+        <DrawerItemList {...props} />
+        <DrawerItem
+        label={()=>(<Text>Groups</Text>)}
+      />
       <DrawerItem
         label={() => (
           <View>
-            <Image source={{ uri: `https://sonukr.in/assests/sonu-tree-bg-blur-color.png` }} style={{ height: 60, width: 60, borderRadius: 30 }} />
-            <Text style={{fontSize:18, fontWeight:"800"}}>Sonu Kumar Yadav</Text>
+            <Text>Events</Text>
           </View>
         )}
-        // onPress={()=>navigation.navigate("Home")}
       />
-      <DrawerItemList {...props} />
+      </View>
+
+      <View style={{ borderBottomWidth: 0.5, borderColor: "gray", marginBottom: 15 }}></View>
+
+      <View style={{}}>
       <DrawerItem
-        label="Help"
-        onPress={() => Linking.openURL('https://mywebsite.com/help')}
+        icon={({ focused, color, size }) => <Ionicons style={{marginRight:-25}} color={color} size={25} name={focused ? 'heart' : 'heart-outline'} />}
+        label={() => (
+          <Text>Try premium for free</Text>
+        )}
       />
+      <DrawerItem
+        icon={({ focused, color, size }) => <Ionicons style={{ marginRight: -25 }} color={color} size={25} name={focused ? 'settings' : 'settings-outline'} />}
+        label={() => (
+          <Text>Setting</Text>
+        )}
+      />
+      </View>
+
     </DrawerContentScrollView>
   );
 }
@@ -128,7 +174,7 @@ const MyDrawer = () => {
       defaultStatus={"closed"}
       drawerContent={(props) => (<CustomDrawerContent {...props} />)}
     >
-      {/* <Drawer.Screen name="Home" component={Home} options={{ headerShown: false }} /> */}
+      <Drawer.Screen name="Home" component={Home} options={{ headerShown: false }} />
     </Drawer.Navigator>
   );
 }

@@ -1,5 +1,5 @@
 
-## Using Expo-Camera
+## [Using Expo-Camera](https://docs.expo.dev/versions/latest/sdk/camera/)
 
 Please be sure that you have already installed expo-module
 
@@ -29,4 +29,4 @@ allprojects {
 }            
 ```
 
-
+## [Expo text to speech](https://docs.expo.dev/versions/latest/sdk/speech/)

@@ -31,7 +31,8 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         borderWidth: 1,
         backgroundColor: "#333333",
-        padding: 3
+        padding: 10,
+        marginBottom:10
     },
     input1: {
         flex: 1,

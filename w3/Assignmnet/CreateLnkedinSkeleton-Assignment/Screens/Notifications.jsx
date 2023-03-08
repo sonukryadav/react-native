@@ -2,55 +2,28 @@ import React from 'react';
 import { createNativeStackNavigator, } from '@react-navigation/native-stack';
 import { View, Image, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Feather } from 'react-native-vector-icons';
+import Header from '../Components/Header';
+import RecentConnect from '../Components/RecentConnect';
+import EarlyApply from '../Components/EarlyApply';
+import JobAlert from '../Components/JobAlert';
+import ViewJobs from '../Components/ViewJobs';
+import RecentConnectScreen from '../Screens/RecentConnectScreen';
+import EarlyApplyScreen from '../Screens/EarlyApplyScreen';
+import JobAlertScreen from '../Screens/JobAlertScreen';
+import ViewJobsScreen from '../Screens/ViewJobsScreen';
+
 
 const Stack = createNativeStackNavigator();
 
-const RecentConnect = () => {
+const Notification = ({ navigation}) => {
     return (
-        <TouchableOpacity>
-            <View style={styles.view1}>
-                <Image source={{ uri: 'https://images.unsplash.com/photo-1623091410901-00e2d268901f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8aW5kaWFuJTIwZ2lybHxlbnwwfHwwfHw%3D&w=1000&q=80' }}
-                        style={styles.Img1}
-                    />
-                    <Text>Reach out to your recent connections <Text style={{ fontWeight: 800, }}>Anjali Mondal</Text></Text>
-                    <Text style={{fontSize:19}}>12h</Text>
-                    {/* <Feather name="more-vertical" /> */}
-            </View>
-        </TouchableOpacity>
-    );
-}
-
-
-const JobAlert = () => {
-    return (
-        <>
-        </>
-    );
-}
-
-const EarlyApply = () => {
-    return (
-        <>
-        </>
-    );
-}
-
-const ViewJobs = () => {
-    return (
-        <>
-        </>
-    );
-}
-
-const Notification = () => {
-    return (
-        <SafeAreaView>
+        <SafeAreaView style={styles.view0}>
             <View>
-                <RecentConnect />
-                <JobAlert />
-                <EarlyApply />
-                <ViewJobs />
+                <Header navigation={navigation} />
+                <RecentConnect navigation={navigation} />
+                <EarlyApply navigation={navigation} />
+                <JobAlert navigation={navigation} />
+                <ViewJobs navigation={navigation} />
             </View>
         </SafeAreaView>
     );
@@ -59,23 +32,21 @@ const Notification = () => {
 function Notifications() {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Notifications" component={Notification} />
+            <Stack.Screen name="Notifications" component={Notification} options={{ headerShown: false, title:"Notifications" }} />
+            <Stack.Screen name="RecentConnect" component={RecentConnectScreen} options={{ headerShown: true, title:"Recent Connect" }} />
+            <Stack.Screen name="EarlyApply" component={EarlyApplyScreen} options={{ headerShown: true, title:"Early Apply" }} />
+            <Stack.Screen name="JobAlert" component={JobAlertScreen} options={{ headerShown: true, title:"Job Alert" }} />
+            <Stack.Screen name="ViewJobs" component={ViewJobsScreen} options={{ headerShown: true, title:"View Jobs" }} />
         </Stack.Navigator>
     );
 }
 
 const styles = StyleSheet.create({
-    view1: {
-        // flex: 1,
-        flexDirection: "row",
-        justifyContent: "space-between",
-        backgroundColor: "red",
+    view0: {
+        flex: 1,
+        backgroundColor: "black",
+        padding:5
     },
-    Img1: {
-        width: 50,
-        height: 50,
-        borderRadius: 50
-    }
 });
 
 

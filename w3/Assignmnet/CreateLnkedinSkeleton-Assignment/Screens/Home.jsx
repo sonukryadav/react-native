@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
         borderWidth: 3,
         // borderColor:"red",
         backgroundColor: "#333333",
-        marginVertical: 15,
+        marginBottom:15,
         padding: 5,
         borderRadius: 10,
     },

@@ -20,21 +20,6 @@ const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
 
-
-// const Notification = ({ navigation }) => {
-//   return (
-//     <SafeAreaView style={{ flex: 1 }}>
-//       <ScrollView>
-//         <Header navigation={navigation} />
-//         <View style={{ alignItems: "center" }}>
-//           <Text>Notification</Text>
-//         </View>
-//       </ScrollView>
-//     </SafeAreaView>
-//   );
-// }
-
-
 const MyTab = () => {
   return (
     <Tab.Navigator

@@ -1,6 +1,7 @@
 import React from 'react';
 import { createNativeStackNavigator, } from '@react-navigation/native-stack';
 import { View, Image, Text, TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Feather } from 'react-native-vector-icons';
 
 const Stack = createNativeStackNavigator();
@@ -23,7 +24,6 @@ const RecentConnect = () => {
                 </View>
             </View>
         </TouchableOpacity>
-        
     );
 }
 
@@ -60,7 +60,7 @@ const Notification = () => {
     );
 }
 
-function MyStack() {
+function Notifications() {
     return (
         <Stack.Navigator>
             <Stack.Screen name="Notifications" component={Notification} />
@@ -69,4 +69,4 @@ function MyStack() {
 }
 
 
-export default MyStack;
+export default Notifications;

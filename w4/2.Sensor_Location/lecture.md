@@ -342,6 +342,15 @@ npx expo install expo-location
 }
 ```
 
+```js
+// Get user current location
+import * as Location from 'expo-location';
+...
+...
+...
+let location = await Location.getCurrentPositionAsync({});
+```
+
 ## Find Distance between two locations
 
 use npm package [geolib](https://www.npmjs.com/package/geolib) 

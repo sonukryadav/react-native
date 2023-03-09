@@ -10,3 +10,5 @@ The user profile should store latitude and longitude during profile creation. Th
 On the onboarding screen ad a screen to ask location.
 
 This screen should be added to profile edit and display as well.
+
+Hint: use the list of objects given [here](https://subrata-das.web.app/users.json)

@@ -349,6 +349,9 @@ import * as Location from 'expo-location';
 ...
 ...
 let location = await Location.getCurrentPositionAsync({});
+// Find latitude and longitude
+let latitude: location.coords.latitude
+let longitude: location.coords.longitude
 ```
 
 ## Find Distance between two locations

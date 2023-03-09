@@ -2,15 +2,14 @@ import React from 'react';
 import { createNativeStackNavigator, } from '@react-navigation/native-stack';
 import { View, Image, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Header from '../Components/Header';
-import RecentConnect from '../Components/RecentConnect';
-import EarlyApply from '../Components/EarlyApply';
-import JobAlert from '../Components/JobAlert';
-import ViewJobs from '../Components/ViewJobs';
-import RecentConnectScreen from '../Screens/RecentConnectScreen';
-import EarlyApplyScreen from '../Screens/EarlyApplyScreen';
-import JobAlertScreen from '../Screens/JobAlertScreen';
-import ViewJobsScreen from '../Screens/ViewJobsScreen';
+import RecentConnect from './Components/RecentConnect';
+import EarlyApply from './Components/EarlyApply';
+import JobAlert from './Components/JobAlert';
+import ViewJobs from './Components/ViewJobs';
+import RecentConnectScreen from './Screens/RecentConnectScreen';
+import EarlyApplyScreen from './Screens/EarlyApplyScreen';
+import JobAlertScreen from './Screens/JobAlertScreen';
+import ViewJobsScreen from './Screens/ViewJobsScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -19,7 +18,6 @@ const Notification = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.view0}>
             <View>
-                <Header navigation={navigation} />
                 <RecentConnect navigation={navigation} />
                 <EarlyApply navigation={navigation} />
                 <JobAlert navigation={navigation} />

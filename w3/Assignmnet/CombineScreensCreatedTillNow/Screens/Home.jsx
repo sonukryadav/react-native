@@ -3,12 +3,13 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import Icons from 'react-native-vector-icons/AntDesign';
 import Icons1 from 'react-native-vector-icons/FontAwesome'
 import Icons2 from 'react-native-vector-icons/Feather'
-import post from "./db.json";
-import sonu1 from "./assets/sonuImage.png"
+import post from "../db.json";
 import {
-    Text, View, StyleSheet, SafeAreaView,
-    ScrollView, Platform, TextInput, Image, Alert, TouchableOpacity, FlatList
+    SafeAreaView, Text, View, StyleSheet, ScrollView, Image, Alert, TouchableOpacity, FlatList, StatusBar
 } from 'react-native';
+import Header from '../Components/Header';
+import sonu1 from "../assets/sonuImage.png";
+
 
 
 const SeeMoreText = ({ text }) => {
@@ -52,7 +53,6 @@ let postImages = [
 
 
 const Post = ({ item }) => {
-
     return (
         <>
             <View style={styles.postBox}>
@@ -134,59 +134,25 @@ const Post = ({ item }) => {
                             <Text style={{ color: "white" }}>Send</Text>
                         </TouchableOpacity>
                     </View>
-
                 </View>
-
-
-
             </View>
         </>
     )
-
-
-
 }
 
-export default function Home() {
 
-    const chat = () => {
-        Alert.alert("Chat section under development.")
-    }
-
-
-
-    { /* */ }
+export default function Home({ navigation }) {
     return (
-        <SafeAreaView style={styles.container}>
-            <ScrollView style={styles.view0}>
-
-                { /* header */}
-                <View style={styles.view1}>
-                    <Image style={styles.image1} source={sonu1} />
-                    <TextInput style={styles.input1}
-                        placeholder={" 🔍   Search"}
-                        placeholderTextColor={"white"}
-                    />
-                    <Ionicons onPress={chat} name={"chatbubble-ellipses-sharp"} size={25} color={"grey"} />
-                </View>
-
-
-
-                <FlatList
-                    data={post}
-                    renderItem={({ item }) => (<Post item={item} />)}
-                    keyExtractor={item => (item.id).toString()}
-                />
-
+        <SafeAreaView style={[styles.container]}>
+            <StatusBar/>
+            <ScrollView>
             </ScrollView>
-
-            <View style={{ padding: 8, borderWidth: 0, borderColor: "white", justifyContent: "space-between", flexDirection: "row" }}>
-                <Ionicons onPress={() => { Alert.alert("Under development") }} name={"home-outline"} size={25} color={"white"} />
-                <Ionicons onPress={() => { Alert.alert("Under development") }} name={"people-outline"} size={25} color={"white"} />
-                <Icons onPress={() => { Alert.alert("Under development") }} name={"plussquareo"} size={25} color={"white"} />
-                <Icons onPress={() => { Alert.alert("Under development") }} name={"bells"} size={25} color={"white"} />
-                <Icons1 onPress={() => { Alert.alert("Under development") }} name={"suitcase"} size={25} color={"white"} />
-            </View>
+            <FlatList
+                data={post}
+                renderItem={({ item }) => (<Post item={item} />)}
+                keyExtractor={item => (item.id).toString()}
+                ListHeaderComponent={<Header navigation={navigation} />}
+            />
         </SafeAreaView>
     );
 }
@@ -194,31 +160,17 @@ export default function Home() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: Platform.select({ android: 30, ios: 35, web: 0 }),
         backgroundColor: 'black',
         paddingHorizontal: 4,
         // borderWidth:2,
         borderColor: "red",
-    },
-    view0: {
-        flex: 1,
-        // borderWidth:2,
-        borderColor: "green"
-    },
-    view1: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        borderWidth: 1,
-        backgroundColor: "#333333",
-        padding: 3
     },
     postBox: {
         flex: 1,
         borderWidth: 3,
         // borderColor:"red",
         backgroundColor: "#333333",
-        marginVertical: 15,
+        marginBottom:15,
         padding: 5,
         borderRadius: 10,
     },
@@ -226,12 +178,6 @@ const styles = StyleSheet.create({
         // borderWidth:1,
         borderColor: "white",
         flexDirection: "row"
-    },
-    view3: {
-        // flexDirection:"row",
-        // justifyContent:"space-between",
-        // borderWidth:1,
-        // borderColor:"green"
     },
     view4: {
         marginHorizontal: 12,
@@ -241,17 +187,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "flex-end",
         alignItems: "center"
-    },
-    input1: {
-        flex: 1,
-        // borderWidth:0.5,
-        marginHorizontal: 10,
-        backgroundColor: "#4080bf",
-        padding: 2,
-        paddingHorizontal: 10,
-        color: "white",
-        fontSize: 15,
-        borderRadius: 4
     },
     image1: {
         width: 40,

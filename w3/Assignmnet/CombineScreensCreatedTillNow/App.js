@@ -3,12 +3,9 @@ import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Home from './Screens/Home';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem, } from '@react-navigation/drawer';
-import MyNetwork from './Screens/MyNetwork';
-import Posts from './Screens/Posts';
-import Notifications from './Screens/Notifications';
-import Home from "./Home";
+import Notifications from './Notifications';
+import Home1 from "./Home";
 import Interest from "./Interest";
 import LoginPage from "./LoginPage";
 
@@ -46,7 +43,7 @@ const MyTab = () => {
     >
       <Tab.Screen name="d1" component={Interest} />
       <Tab.Screen name="d2" component={LoginPage} />
-      <Tab.Screen name="d4" component={Home} />
+      <Tab.Screen name="d4" component={Home1} />
       <Tab.Screen name="d10" component={Notifications} />
     </Tab.Navigator>
   );

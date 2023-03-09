@@ -142,7 +142,6 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
         fontSize: 20,
         color: "white",
-        placeholderTextColor: "grey",
     },
     text1: {
         fontSize: 35,

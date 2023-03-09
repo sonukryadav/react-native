@@ -128,7 +128,7 @@ export default function Interest() {
                     {
                         interest.map((val, ind, array) => {
                             return (
-                                <View style={[{ ...styles.text3 }, {}]}><Button title={val.interest} color={val.selected ? "teal" : "black"} onPress={() => countfun(ind)} /></View>
+                                <View key={ind} style={[{ ...styles.text3 }, {}]}><Button title={val.interest} color={val.selected ? "teal" : "black"} onPress={() => countfun(ind)} /></View>
                             );
                         })
                     }

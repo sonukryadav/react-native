@@ -84,7 +84,7 @@ const Post = ({ item }) => {
                     horizontal
                     data={postImages}
                     renderItem={({ item }) => (<PostImage url={item} />)}
-                    keyExtractor={item => item}
+                    keyExtractor={item => item.id}
                     style={{ marginVertical: 20 }}
                 />
 
@@ -169,16 +169,13 @@ export default function Home() {
                     />
                     <Ionicons onPress={chat} name={"chatbubble-ellipses-sharp"} size={25} color={"grey"} />
                 </View>
-
-
-
-                <FlatList
-                    data={post}
-                    renderItem={({ item }) => (<Post item={item} />)}
-                    keyExtractor={item => (item.id).toString()}
-                />
-
             </ScrollView>
+
+            <FlatList
+                data={post}
+                renderItem={({ item }) => (<Post item={item} />)}
+                keyExtractor={(item, index) => (index.toString())}
+            />
 
             <View style={{ padding: 8, borderWidth: 0, borderColor: "white", justifyContent: "space-between", flexDirection: "row" }}>
                 <Ionicons onPress={() => { Alert.alert("Under development") }} name={"home-outline"} size={25} color={"white"} />

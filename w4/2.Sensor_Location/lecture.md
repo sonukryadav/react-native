@@ -18,7 +18,7 @@ cd stepcount
 npx install-expo-modules@latest
 ```
 
-Update android/gradle/build.gradle
+Update android/build.gradle
 
 ```js
 allprojects {

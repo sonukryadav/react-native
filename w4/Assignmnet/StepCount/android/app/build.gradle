@@ -113,9 +113,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace 'com.sonukr1256.StepCount'
+    namespace 'com.sonukr1256.stepcount'
     defaultConfig {
-        applicationId 'com.sonukr1256.StepCount'
+        applicationId 'com.sonukr1256.stepcount'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

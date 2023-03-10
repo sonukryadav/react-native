@@ -1,4 +1,4 @@
-package com.sonukr1256.StepCount;
+package com.sonukr1256.stepcount;
 
 import android.app.Application;
 import android.content.res.Configuration;

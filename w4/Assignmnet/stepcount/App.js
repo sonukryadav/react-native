@@ -20,7 +20,7 @@ const colors = {
   primary: "rgb(51, 51, 0)",
   primary50: "rgba(51, 51, 0,0.5)",
   secondary: "#f39c12",
-  text: "#ecf0f1",
+  text: "black",
 };
 
 export default function App() {

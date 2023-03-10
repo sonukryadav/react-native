@@ -23,7 +23,7 @@ allprojects {
 }            
 ```
 
-Before proceding further please further please confirm that your have installed `firebase app`, If not please follow the below steps to install.
+Before proceding further please further please confirm that you have installed `firebase app`, If not please follow the below steps to install.
 
 ## Install Firebase App
 
@@ -151,95 +151,8 @@ Foreground | When the application is open and in view.
 Background | When the application is open, however in the background (minimised). This typically occurs when the user has pressed the "home" button on the device or has switched to another app via the app switcher.
 Quit       | When the device is locked or application is not active or running. The user can quit an app by "swiping it away" via the app switcher UI on the device.
 
-
-#### Foreground state messages
-
-on IOS you have to request permission.
-
-```js
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Platform, Alert } from 'react-native';
-import messaging from '@react-native-firebase/messaging';
-import React, { useEffect, useState } from 'react';
-
-// On IOS you have to request permission
-async function requestUserPermission() {
-  const authStatus = await messaging().requestPermission();
-  const enabled =
-    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-    authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-
-  if (enabled) {
-    console.log('Authorization status:', authStatus);
-    return true;
-  }
-  return false;
-}
-
-export default function App() {
-  const [pushToken, setPushToken] = useState('');
-
-  useEffect(()=>{
-    requestUserPermission().then((msgPermission) => {
-      if(msgPermission){
-        messaging().getToken().then(token => {
-          setPushToken(token);
-          console.log(token);
-        })
-      }else{
-        Alert("MSG Permission","Permission not granted!")
-      }
-    })
-    
-  },[])
-
-  useEffect(() => {
-    // Foreground State Messages
-    const unsubscribe = messaging().onMessage(async remoteMessage => {
-      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
-    });
-
-    return unsubscribe;
-  }, []);
-
-  return (
-    <View style={styles.container}>
-      <Text>Firebase Cloud Messaging Tutorial</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-
-```
-
-#### Background & Quit state messages
-
-```js
-import { registerRootComponent } from 'expo';
-import messaging from '@react-native-firebase/messaging';
-
-// Register background handler
-messaging().setBackgroundMessageHandler(async remoteMessage => {
-    console.log('Message handled in the background!', remoteMessage);
-  });
-
-  
-import App from './src/App';
-
-// registerRootComponent calls AppRegistry.registerComponent('main', () => App);
-// It also ensures that whether you load the app in Expo Go or in a native build,
-// the environment is set up appropriately
-registerRootComponent(App);
-```
+## Live 1: Foreground state messages
+## Live 2: Background and Quit state message
 
 - Now to send a message goto firebase console. 
 - Click on `All Products` -> `Cloud Messaging` -> `Create Your First Campaign` -> `Firebase Notification Messages`. 

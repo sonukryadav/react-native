@@ -19,6 +19,7 @@ npx expo install react-native-reanimated
 ```
 
 ```js
+// babel.config.js
   module.exports = {
     presets: [
       ...

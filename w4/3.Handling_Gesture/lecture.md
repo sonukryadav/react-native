@@ -19,6 +19,7 @@ npx expo install react-native-reanimated
 ```
 
 ```js
+// babel.config.js
   module.exports = {
     presets: [
       ...
@@ -83,6 +84,7 @@ const styles = StyleSheet.create({
 ### Basic Understanding Of Gesture
 
 ```js
+// ./components/BottomSheet.js
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';

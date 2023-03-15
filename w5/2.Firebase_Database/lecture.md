@@ -19,6 +19,34 @@ import database from '@react-native-firebase/database';
 const reference = database().ref('/users/123');
 ```
 
+### In case of Expo
+
+In case of Expo, instead of importing database from the package, use the below method.
+
+```js
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getDatabase } from "firebase/database";
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyB2rf0tWVDRAKzgrfKnoyjqV-oqkVPGHMk",
+  authDomain: "signal-clone-subrata.firebaseapp.com",
+  projectId: "signal-clone-subrata",
+  storageBucket: "signal-clone-subrata.appspot.com",
+  messagingSenderId: "1028334267171",
+  appId: "1:1028334267171:web:6e1dd9486624815e523a96",
+  databaseURL: "https://signal-clone-subrata-default-rtdb.firebaseio.com/"
+};
+
+const app = initializeApp(firebaseConfig);
+// Initialize Firebase Authentication and get a reference to the service
+const auth = getAuth(app);
+const database = getDatabase(app);
+
+export { auth, database };
+```
+
 ### Reading Data
 
 #### One-time read

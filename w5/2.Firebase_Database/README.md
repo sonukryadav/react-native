@@ -23,4 +23,8 @@
 # Coding:
 
 1. Live:
+- Realtime database read, write and update
+- Firestore database Read, Write and update
 2. Assignment:
+- Chat Room Page with emoji implementation
+
